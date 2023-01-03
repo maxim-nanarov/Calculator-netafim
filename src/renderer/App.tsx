@@ -1,8 +1,8 @@
 import { MemoryRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import './App.scss';
-import { useState } from 'react';
 import Input from './Input';
+import Data from './data';
 
 const Calculate = (event: any) => {
   event.preventDefault();
@@ -14,9 +14,10 @@ const Hello = () => {
       <nav>
         <Link to={'/'}>Select</Link>
         <Link to={'/Input'}>Input</Link>
+        <Link to={'/Data'}>Data</Link>
       </nav>
-      <h1>Select the Data</h1>
-      <div className="InputClass">
+      <h1>Select The Data</h1>
+      <div className="Calculator">
         <form className="Form" onSubmit={Calculate}>
           <select name="Dripper" id="Dripper"></select>
           <select name="Flow" id="Flow" placeholder="Flow"></select>
@@ -39,6 +40,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Hello />} />
         <Route path="/Input" element={<Input />} />
+        <Route path="/Data" element={<Data />} />
       </Routes>
     </Router>
   );

@@ -9,9 +9,9 @@ body {
   background: rgb(79, 79, 79);
   font-family: sans-serif;
   overflow-y: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* display: flex;
+    justify-content: center;
+    align-items: center; */
 }
 
 button {

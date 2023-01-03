@@ -77,41 +77,52 @@ export default function Input() {
   };
 
   return (
-    <div>
+    <>
       <nav>
         <Link to={'/'}>Select</Link>
         <Link to={'/Input'}>Input</Link>
+        <Link to={'/Data'}>Data</Link>
       </nav>
-      <h1>Input the Data</h1>
-      <form className="Form" onSubmit={Calculate}>
-        <input name="dp" id="dp" placeholder="dp"></input>
-        <input name="kf" id="kf" placeholder="kf"></input>
-        <input name="Pend" id="Pend" placeholder="Pressure in the end"></input>
-        <input name="Qlat" id="Qlat" placeholder="Qlat"></input>
-        <input name="Dlat" id="Dlat" placeholder="Dlat"></input>
-        <input name="kd" id="kd" placeholder="kd"></input>
-        <input name="sp" id="sp" placeholder="sp"></input>
-        <input name="pc" id="pc" placeholder="Pressure by meter"></input>
-        <input name="k" id="k" placeholder="Coefficent of the dripper"></input>
-        <input name="Length" id="Length" placeholder="Pipe - Length"></input>
-        <input name="x" id="x" placeholder="exponent of the dripper"></input>
-        <input name="p" id="p" placeholder="Pressure(bar)"></input>
-        <div className="Range">
+      <div className="Calculator">
+        <h1>Put The Data</h1>
+        <form className="Form" onSubmit={Calculate}>
+          <input name="dp" id="dp" placeholder="dp"></input>
+          <input name="kf" id="kf" placeholder="kf"></input>
           <input
-            name="Slope"
-            id="Slope"
-            placeholder="slope"
-            step={0.5}
-            max={3}
-            min={-3}
-            type="range"
-            onChange={handleRangeChange}
+            name="Pend"
+            id="Pend"
+            placeholder="Pressure in the end"
           ></input>
-          <label>{Slope}%</label>
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-      {a}
-    </div>
+          <input name="Qlat" id="Qlat" placeholder="Qlat"></input>
+          <input name="Dlat" id="Dlat" placeholder="Dlat"></input>
+          <input name="kd" id="kd" placeholder="kd"></input>
+          <input name="sp" id="sp" placeholder="sp"></input>
+          <input name="pc" id="pc" placeholder="Pressure by meter"></input>
+          <input
+            name="k"
+            id="k"
+            placeholder="Coefficent of the dripper"
+          ></input>
+          <input name="Length" id="Length" placeholder="Pipe - Length"></input>
+          <input name="x" id="x" placeholder="exponent of the dripper"></input>
+          <input name="p" id="p" placeholder="Pressure(bar)"></input>
+          <div className="Range">
+            <input
+              name="Slope"
+              id="Slope"
+              placeholder="slope"
+              step={0.5}
+              max={3}
+              min={-3}
+              type="range"
+              onChange={handleRangeChange}
+            ></input>
+            <label>{Slope}%</label>
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+        {a}
+      </div>
+    </>
   );
 }
