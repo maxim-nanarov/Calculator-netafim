@@ -1,0 +1,31 @@
+.InputClass {
+  display: flex;
+  flex-direction: column;
+  input {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+}
+.Form {
+  display: flex;
+  flex-direction: column;
+  select {
+    padding: 5px 3px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  input {
+    padding: 5px 3px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+}
+
+.Range {
+  display: flex;
+  justify-content: space-between;
+  label {
+    margin: 5px;
+    font-size: larger;
+  }
+}
