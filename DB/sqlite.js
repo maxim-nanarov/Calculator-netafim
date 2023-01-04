@@ -1,20 +1,18 @@
 const { OPEN_READWRITE, OPEN_CREATE } = require('sqlite3');
-
 const sqlite3 = require('sqlite3').verbose();
 
 // Connect to DB
-const db = new sqlite3.Database(
-  './test.db',
-  OPEN_READWRITE | OPEN_CREATE,
-  (err) => {
-    //const db = new sqlite3.Database(':memory:', OPEN_READWRITE, (err) => {
-    if (err) {
-      console.log('Could not connect to database', err.message);
-    } else {
-      console.log('Connected to database');
-    }
-  }
-);
+module.exports = {
+  db: new sqlite3.Database('./test.db', OPEN_READWRITE | OPEN_CREATE, (err) => {
+    const db = new sqlite3.Database(':memory:', OPEN_READWRITE, (err) => {
+      if (err) {
+        console.log('Could not connect to database', err.message);
+      } else {
+        console.log('Connected to database');
+      }
+    });
+  }),
+};
 
 db.serialize(async () => {
   // Create table
@@ -51,13 +49,13 @@ db.serialize(async () => {
   //   });
 
   //   // Drop table
-  sql = `DROP TABLE Drippers`;
-  let result = db.run(sql);
-  if (result.error === null) {
-    console.log('it all worked');
-  } else {
-    console.log('nope');
-  }
+  // sql = `DROP TABLE Drippers`;
+  // let result = db.run(sql);
+  // if (result.error === null) {
+  //   console.log('it all worked');
+  // } else {
+  //   console.log('nope');
+  // }
 });
 
 db.close();
