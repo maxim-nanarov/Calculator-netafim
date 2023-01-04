@@ -2,22 +2,26 @@ const { OPEN_READWRITE, OPEN_CREATE } = require('sqlite3');
 const sqlite3 = require('sqlite3').verbose();
 
 // Connect to DB
-module.exports = {
-  db: new sqlite3.Database('./test.db', OPEN_READWRITE | OPEN_CREATE, (err) => {
-    const db = new sqlite3.Database(':memory:', OPEN_READWRITE, (err) => {
-      if (err) {
-        console.log('Could not connect to database', err.message);
-      } else {
-        console.log('Connected to database');
-      }
-    });
-  }),
-};
+// module.exports = {
+const db = new sqlite3.Database(
+  './test.db',
+  OPEN_READWRITE | OPEN_CREATE,
+  (err) => {
+    // const db = new sqlite3.Database(':memory:', OPEN_READWRITE, (err) => {
+    if (err) {
+      console.log('Could not connect to database', err.message);
+    } else {
+      console.log('Connected to database');
+    }
+  }
+);
+// }),
+// };
 
 db.serialize(async () => {
   // Create table
-  let sql = `CREATE TABLE IF NOT EXISTS Pipes (PIPES INTEGER PRIMARY KEY, MAX_PRESSURE INTERGER, KD INTERGER)`;
-  let sql2 = `CREATE TABLE IF NOT EXISTS Drippers (id INTEGER PRIMARY KEY, k INTERGER, X INTERGER, MAX_PRESSURE INTERGER, PIPES INTERGER, FOREIGN KEY (PIPES) REFERENCES Persons(PIPES))`;
+  let sql = `CREATE TABLE IF NOT EXISTS Drippers_Models (id INTEGER PRIMARY KEY, Dripper_type INTERGER, Model INTERGER, FOREIGN KEY (Model) REFERENCES Persons(Model));`;
+  let sql2 = `CREATE TABLE IF NOT EXISTS Models (Model_number INTERGER PRIMARY KEY, Flow_Rate INTERGER, Pressure_bar INTERGER, K INTERGER, X INTERGER, Diameter INTERGER );`;
   db.run(sql);
   db.run(sql2);
 
