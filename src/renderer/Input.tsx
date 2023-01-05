@@ -43,10 +43,19 @@ export default function Input() {
     let Qd: number = 0;
 
     for (let i = 0; i < Length; i = i + sp) {
-      console.log('Math.Pow dp^x' + Math.pow(dp, x));
       Qd = k * Math.pow(dp, x);
       Q1 += Qd;
-      dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, k) + Ps(Slope, sp);
+      console.log(
+        'the dp before the addition of these numbers: Ps: ' +
+          Ps(Slope, Length) +
+          ' Pd: ' +
+          Pd(Q1, Dlat, k) +
+          ' Phw: ' +
+          Phw(Q1, Dlat, sp) +
+          ' And this is the QD: ' +
+          Qd
+      );
+      dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, k) + Ps(Slope, Length);
       console.log(dp);
     }
     console.log('Q: ' + Math.floor(Q1));
@@ -65,11 +74,11 @@ export default function Input() {
       return 6.367 * Math.pow(10, -3) * Q * D * kd;
     }
 
-    function Ps(Slope: number, sp: number) {
+    function Ps(Slope: number, Length: number) {
       console.log('Slope: ' + Slope);
-      console.log('SP: ' + sp);
-      console.log('Slope*SP = ' + Slope * sp);
-      return Slope * sp;
+      console.log('SP: ' + Length);
+      console.log('Slope*SP = ' + Slope * Length);
+      return Slope * Length;
     }
   };
 
@@ -114,6 +123,7 @@ export default function Input() {
             ></input>
             <label>{Slope}%</label>
           </div>
+
           <div className="Range">
             <input
               name="SP"

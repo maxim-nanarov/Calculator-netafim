@@ -26,7 +26,7 @@ app.get('/Drippers', (req, res) => {
 });
 
 app.get('/Insert_Into_Drippers', (req, res) => {
-  const selectUsers = 'Insert Into Drippers Values();';
+  const selectUsers = 'SELECT * FROM DRIPPERS';
   db.all(selectUsers, (err, rows) => {
     if (err) {
       console.error(err.message);
