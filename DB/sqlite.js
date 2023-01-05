@@ -19,6 +19,9 @@ const db = new sqlite3.Database(
 // };
 
 db.serialize(async () => {
+  //I created 4 Tables:
+  //
+
   // Create table
   // let sql = `CREATE TABLE IF NOT EXISTS Drippers(
   //   id INTERGER PRIMARY KEY,
