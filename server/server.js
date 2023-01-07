@@ -12,10 +12,19 @@ const db = new sqlite3.Database('../DB/test.db', (err) => {
   }
 });
 
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:1212');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
+
 // Define a route for retrieving data from the database
-app.get('/Drippers', (req, res) => {
-  const selectUsers = 'SELECT * FROM Drippers;';
-  db.all(selectUsers, (err, rows) => {
+app.get('/Drippers', (req, res, next) => {
+  const SelectDrippers = 'SELECT * FROM Drippers;';
+  db.all(SelectDrippers, (err, rows) => {
     if (err) {
       console.error(err.message);
       res.send({ success: false, error: err.message });
