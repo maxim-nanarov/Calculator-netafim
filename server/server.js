@@ -70,6 +70,21 @@ app.get('/DData', (req, res, next) => {
     }
   });
 });
+//more complicated request that is made for the select
+//calculator:
+
+app.get('/Get_Relevent_Pipes', (req, res) => {
+  const id = req.query.id;
+  let sql = `Select * from Pipes Where Models IN (Select Models from Dripper_Pipes Where dripper_id = ${id})`;
+  db.all(sql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.send({ success: false, error: err.message });
+    } else {
+      res.send({ success: true, data: rows });
+    }
+  });
+});
 
 // Start the server
 app.listen(3000, () => {
