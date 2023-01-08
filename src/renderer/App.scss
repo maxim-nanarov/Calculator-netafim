@@ -84,3 +84,23 @@ nav {
   align-items: center;
   flex-direction: column;
 }
+
+table,
+th,
+tr {
+  border: 1px rgb(252, 252, 252) solid;
+}
+table {
+  border-collapse: collapse;
+}
+
+th {
+  padding: 3px 5px;
+}
+
+.Table-Container {
+  margin-top: 7%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

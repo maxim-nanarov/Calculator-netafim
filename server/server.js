@@ -22,6 +22,7 @@ app.use(function (req, res, next) {
 });
 
 // Define a route for retrieving data from the database
+//(the request here are gettting data from the tables)
 app.get('/Drippers', (req, res, next) => {
   const SelectDrippers = 'SELECT * FROM Drippers;';
   db.all(SelectDrippers, (err, rows) => {
@@ -34,9 +35,33 @@ app.get('/Drippers', (req, res, next) => {
   });
 });
 
-app.get('/Insert_Into_Drippers', (req, res) => {
-  const selectUsers = 'SELECT * FROM DRIPPERS';
-  db.all(selectUsers, (err, rows) => {
+app.get('/Pipes', (req, res, next) => {
+  const SPipes = 'SELECT * FROM Pipes;';
+  db.all(SPipes, (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      res.send({ success: false, error: err.message });
+    } else {
+      res.send({ success: true, data: rows });
+    }
+  });
+});
+
+app.get('/Dripper_Pipes', (req, res, next) => {
+  const SelectDrippers = 'SELECT * FROM Dripper_Pipes;';
+  db.all(SelectDrippers, (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      res.send({ success: false, error: err.message });
+    } else {
+      res.send({ success: true, data: rows });
+    }
+  });
+});
+
+app.get('/DData', (req, res, next) => {
+  const SelectDrippers = 'SELECT * FROM Drippers_data;';
+  db.all(SelectDrippers, (err, rows) => {
     if (err) {
       console.error(err.message);
       res.send({ success: false, error: err.message });
