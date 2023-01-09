@@ -1,3 +1,5 @@
+@import '~bootstrap/scss/bootstrap';
+
 .InputClass {
   display: flex;
   flex-direction: column;
@@ -129,7 +131,7 @@ nav {
 table,
 th,
 tr {
-  border: 1px rgb(252, 252, 252) solid;
+  border: 1px rgb(0, 0, 0) solid;
 }
 table {
   border-collapse: collapse;
@@ -137,6 +139,7 @@ table {
 
 th {
   padding: 3px 5px;
+  text-align: center;
 }
 
 .Table-Container {
@@ -144,4 +147,17 @@ th {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  table {
+    width: 70%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    background-color: white;
+    color: black;
+    border: solid 1px black;
+  }
+}
+
+body {
+  overflow-y: auto;
 }

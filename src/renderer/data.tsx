@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import './App.scss';
 import axios from 'axios';
+import DripperS from './components/DripperS';
+import Pipes_Table from './components/Pipes';
+import Dripper_Table from './components/Dripper';
+import Dripper_Pipe from './components/Dripper_Pipes';
 
 export default function Data() {
-  const [Dripper_Display, setDripper_Display] = useState();
-  const [Drippers, setDrippers] = useState<any>();
-  const [Drippers_data, setDripper_data] = useState<any>();
   const [Dripper_Pipes, setDripper_Pipes] = useState<any>();
   const [Pipes, setPipes] = useState<any>();
 
@@ -19,24 +20,6 @@ export default function Data() {
   let a: any;
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3000/Drippers')
-      .then((res) => {
-        setDrippers(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    axios
-      .get('http://localhost:3000/DData')
-      .then((res) => {
-        setDripper_data(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
     axios
       .get('http://localhost:3000/Dripper_Pipes')
       .then((res) => {
@@ -56,28 +39,6 @@ export default function Data() {
       });
   }, []);
 
-  useEffect(() => {
-    console.log('the same ' + typeof Drippers);
-    console.log(Drippers !== undefined);
-    if (Drippers !== undefined) {
-      let count = -1;
-      a = Drippers.map((row: any) => {
-        count++;
-        return (
-          <tr key={count}>
-            <th>{row.id}</th>
-            <th>{row.Dripper_Type}</th>
-            <th>Edit</th>
-            <th> - </th>
-          </tr>
-        );
-      });
-      setDripper_Display(a);
-    } else {
-      console.log(Drippers);
-    }
-  }, [Drippers]);
-
   return (
     <div>
       <nav>
@@ -86,15 +47,10 @@ export default function Data() {
         <Link to={'/Data'}>Data</Link>
       </nav>
       <div className="Table-Container">
-        <table>
-          <tr>
-            <th>id</th>
-            <th>Type</th>
-            <th>Edit Button</th>
-            <th> + </th>
-          </tr>
-          {Dripper_Display}
-        </table>
+        <Dripper_Table></Dripper_Table>
+        <Pipes_Table></Pipes_Table>
+        <DripperS></DripperS>
+        <Dripper_Pipe></Dripper_Pipe>
       </div>
     </div>
   );
