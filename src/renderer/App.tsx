@@ -23,7 +23,7 @@ const Hello = () => {
   const [Slope, setSlope] = useState(0);
   const [SP, setSP] = useState(0.15);
   const [dp, setDP] = useState(0);
-  const [a, setA] = useState();
+  const [a, setA] = useState<any>();
   //In here the functions help with the display
   //* of the slope of the line
   //* and seperation from each dripper
@@ -64,9 +64,7 @@ const Hello = () => {
         .get(`http://localhost:3000/Get_Relevent_Pipes?id=${SDripper}`)
         .then((res) => {
           setPipes(res.data.data);
-          setSPipe(res.data.data[0].Models);
-          console.log('This is the specific pipe I chose for the start: ');
-          console.log(res.data.data[0].Models);
+          setSPipe(res.data.data[0]);
         })
         .catch((err) => {
           console.log(err);
@@ -83,9 +81,9 @@ const Hello = () => {
         return (
           <option
             key={count}
-            value={data.Models}
+            value={data}
             onChange={(event) => {
-              setSPipe(data.Models);
+              setSPipe(data);
             }}
           >
             {data.Models}
@@ -131,35 +129,24 @@ const Hello = () => {
   }, [ResultsQ]);
 
   const Calculate = (event: any) => {
-    console.log('Dripper Data: ');
-    console.log(DripperData);
-    console.log('Specific Dripper: ');
-    console.log(SDripper);
-    console.log('Pipes: ');
-    console.log(Pipes);
-    console.log('Specific Pipe: ');
-    console.log(SPipe);
-    console.log('Slope: ');
-    console.log(Slope);
-    console.log('Seperation from drippers: ');
-    console.log(SP);
-    console.log('Length: ');
-    console.log(Length);
-    console.log('DP: ');
-    console.log(dp);
-
     let sp = SP;
 
     //the error is unnecessary
-    let k = DripperData![SDripper!].k;
-    let x = DripperData![SDripper!].Exponent;
-    let Dlat: number;
-    Pipes!.forEach((Data: any) => {
-      if (SPipe === Data.Model) {
-        Dlat = Data.Diameter;
-      }
-    });
-    console.log(k);
+    let k = DripperData![SDripper!].k; //V
+    let x = DripperData![SDripper!].Exponent; //V
+    let Dlat: number; //V
+    Dlat = SPipe.Diameter;
+
+    // if (Pipes !== undefined) {
+    //   Pipes.forEach((Data: any) => {
+    //     if (SPipe === Data.Model) {
+    //       console.log('The Condition for finding the Dlat has happend');
+    //       Dlat = Data.Diameter;
+    //     }
+    //   });
+    // } else {
+    //   Dlat = 0;
+    // }
     let Dp = dp;
 
     let Q1: number = k * Math.pow(dp, 0.5);
@@ -168,23 +155,12 @@ const Hello = () => {
     for (let i = 0; i < Length; i = i + sp) {
       Qd = k * Math.pow(Dp, x);
       Q1 += Qd;
-      console.log(
-        'the dp before the addition of these numbers: Ps: ' +
-          Ps(Slope, Length) +
-          ' Pd: ' +
-          Pd(Q1, Dlat, k) +
-          ' Phw: ' +
-          Phw(Q1, Dlat, sp) +
-          ' And this is the QD: ' +
-          Qd
-      );
+      console.log(Qd);
       Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, k) + Ps(Slope, Length);
-      console.log(dp);
     }
-    console.log('Q: ' + Math.floor(Q1));
-    console.log('dp: ' + Dp);
+    console.log(Dp);
     setResultsQ(Math.floor(Q1));
-    console.log(Math.floor(Q1));
+
     function Phw(Qlat: number, Dlat: number, sp: number) {
       let Q = Math.pow(Qlat, 1.76);
       let D = Math.pow(Dlat, -4.76);
@@ -198,9 +174,6 @@ const Hello = () => {
     }
 
     function Ps(Slope: number, Length: number) {
-      console.log('Slope: ' + Slope);
-      console.log('SP: ' + Length);
-      console.log('Slope*SP = ' + Slope * Length);
       return Slope * Length;
     }
   };
