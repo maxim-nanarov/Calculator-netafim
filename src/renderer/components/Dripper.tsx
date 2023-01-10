@@ -60,24 +60,27 @@ export default function Dripper_Table() {
   }, [Drippers]);
 
   return (
-    <Table striped bordered hover size="sm">
-      <thead>
-        <tr>
-          <th>id</th>
-          <th>Type</th>
-          <th>Edit Button</th>
-          <th>
-            <Button
-              onClick={() => {
-                alert('Add Button');
-              }}
-            >
-              Add
-            </Button>
-          </th>
-        </tr>
-      </thead>
-      <tbody>{Dripper_Display}</tbody>
-    </Table>
+    <div>
+      <h1>Drippers</h1>
+      <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>Type</th>
+            <th>Edit Button</th>
+            <th>
+              <Button
+                onClick={() => {
+                  alert('Add Button');
+                }}
+              >
+                Add
+              </Button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>{Dripper_Display}</tbody>
+      </Table>
+    </div>
   );
 }

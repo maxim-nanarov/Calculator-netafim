@@ -59,9 +59,9 @@ app.get('/Pipes', (req, res, next) => {
     }
   });
 });
-
+//SELECT * FROM table_name ORDER BY column_name ASC|DESC
 app.get('/Dripper_Pipes', (req, res, next) => {
-  const SelectDrippers = 'SELECT * FROM Dripper_Pipes;';
+  const SelectDrippers = 'SELECT * FROM Dripper_Pipes ORDER BY Dripper_Id ;';
   db.all(SelectDrippers, (err, rows) => {
     if (err) {
       console.error(err.message);
@@ -111,6 +111,47 @@ app.post('/Update_Dripper_Pipes', (req, res) => {
       res.send({ success: false, error: err.message });
     }
     res.send({ success: true, data: rows });
+  });
+});
+
+app.post('/Insert_Into_Dripper_Pipes', (req, res) => {
+  console.log(req.body);
+  const Dripper_Id = req.body.Dripper_Id;
+  const Pipe_Model = req.body.Pipe_Model;
+  console.log(Dripper_Id, Pipe_Model);
+  let id = 0;
+  db.all(
+    `SELECT id FROM Dripper_Pipes order by id desc limit 1`,
+    (err, row) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(row[0].id + 1);
+        id = row[0].id + 1;
+        console.log('id: ' + id);
+        let sql = `INSERT INTO DRIPPER_PIPES (id,Dripper_id, Pipe_Model) VALUES (${id},${Dripper_Id},${Pipe_Model})`;
+        db.all(sql, (err, rows) => {
+          if (err) {
+            res.send({ success: false, error: err.message });
+          } else {
+            res.send({ success: true });
+          }
+        });
+      }
+    }
+  );
+});
+
+app.post('/Delete_From_Dripper_Pipes', (req, res) => {
+  console.log(req.body);
+  const id = req.body.id;
+
+  let sql = `DELETE FROM DRIPPER_PIPES WHERE id = ${id}`;
+  db.all(sql, (err, rows) => {
+    if (err) {
+      res.send({ success: false, error: err.message });
+    }
+    res.send({ success: true });
   });
 });
 

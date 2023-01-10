@@ -57,27 +57,30 @@ function Pipes_Table() {
   }, [Pipes]);
 
   return (
-    <Table striped bordered hover size="sm">
-      <thead>
-        <tr>
-          <th>Model</th>
-          <th>Diameter</th>
-          <th>Pressure</th>
-          <th>Coefficency</th>
-          <th></th>
-          <th>
-            <Button
-              onClick={() => {
-                alert('Add Button');
-              }}
-            >
-              ADD
-            </Button>
-          </th>
-        </tr>
-      </thead>
-      <tbody>{Pipes_Display}</tbody>
-    </Table>
+    <div>
+      <h1>Pipes</h1>
+      <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Diameter</th>
+            <th>Pressure</th>
+            <th>Coefficency</th>
+            <th></th>
+            <th>
+              <Button
+                onClick={() => {
+                  alert('Add Button');
+                }}
+              >
+                ADD
+              </Button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>{Pipes_Display}</tbody>
+      </Table>
+    </div>
   );
 }
 

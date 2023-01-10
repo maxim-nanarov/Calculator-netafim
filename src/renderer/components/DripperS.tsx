@@ -10,7 +10,7 @@ export default function DripperS() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3000/Drippers')
+      .get('http://localhost:3000/DData')
       .then((res) => {
         setDripperData(res.data.data);
         console.log(res.data.data);
@@ -22,14 +22,18 @@ export default function DripperS() {
 
   useEffect(() => {
     let count = -1;
+    console.log('DripperData');
     console.log(DripperData);
     if (DripperData !== undefined) {
       let a = DripperData.map((data: any) => {
         count++;
         return (
           <tr key={count}>
-            <th>{data.id}</th>
-            <th>{data.Dripper_Type}</th>
+            <th>{data.Dripper_id}</th>
+            <th>{data.Exponent}</th>
+            <th>{data.Pressure}</th>
+            <th>{data.flow_rate}</th>
+            <th>{data.k}</th>
             <th>
               <Button
                 onClick={() => {
@@ -56,24 +60,29 @@ export default function DripperS() {
   }, [DripperData]);
 
   return (
-    <Table striped bordered hover size="sm">
-      <thead>
-        <tr>
-          <th>id</th>
-          <th>Type</th>
-          <th>Edit</th>
-          <th>
-            <Button
-              onClick={() => {
-                alert('Add');
-              }}
-            >
-              Add
-            </Button>
-          </th>
-        </tr>
-      </thead>
-      <tbody>{Dripper_Data_Display}</tbody>
-    </Table>
+    <div>
+      <h1>Drippers Data</h1>
+      <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>Exponent</th>
+            <th>Pressure</th>
+            <th>flow rate</th>
+            <th>Coefficent</th>
+            <th>
+              <Button
+                onClick={() => {
+                  alert('Add');
+                }}
+              >
+                Add
+              </Button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>{Dripper_Data_Display}</tbody>
+      </Table>
+    </div>
   );
 }

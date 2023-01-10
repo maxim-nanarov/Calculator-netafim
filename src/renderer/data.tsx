@@ -8,11 +8,12 @@ import Dripper_Table from './components/Dripper';
 import Dripper_Pipe from './components/Dripper_Pipes';
 
 export default function Data() {
+  //this component holds all the data
+  //and helps the user to handle the current
+  //drippers and pipes storage according to the
+  //news products we have
   const [Dripper_Pipes, setDripper_Pipes] = useState<any>();
   const [Pipes, setPipes] = useState<any>();
-
-  const [Delete, setDelete] = useState<number>();
-  const [Edit, setEdit] = useState<number>();
 
   //this variable will help with the
   //display of the information to the
