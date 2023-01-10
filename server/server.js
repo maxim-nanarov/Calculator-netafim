@@ -1,6 +1,7 @@
 const express = require('express');
 const sqlite3 = require('sqlite3');
-
+var cors = require('cors');
+const bodyParser = require('body-parser');
 const app = express();
 
 // Connect to the database
@@ -12,6 +13,18 @@ const db = new sqlite3.Database('../DB/test.db', (err) => {
   }
 });
 
+app.use(
+  cors({
+    origin: 'http://localhost:1212',
+    methods: ['GET', 'PUT', 'POST'],
+  })
+);
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', 'http://localhost:1212');
   res.header(
@@ -83,6 +96,21 @@ app.get('/Get_Relevent_Pipes', (req, res) => {
     } else {
       res.send({ success: true, data: rows });
     }
+  });
+});
+
+app.post('/Update_Dripper_Pipes', (req, res) => {
+  console.log(req.body);
+  const id = req.body.id;
+  const Dripper_id = req.body.Dripper_id;
+  const Pipe_Model = req.body.Pipe_Model;
+
+  let sql = `UPDATE DRIPPER_PIPES SET Dripper_id=${Dripper_id}, Pipe_Model=${Pipe_Model} WHERE id = ${id}`;
+  db.all(sql, (err, rows) => {
+    if (err) {
+      res.send({ success: false, error: err.message });
+    }
+    res.send({ success: true, data: rows });
   });
 });
 

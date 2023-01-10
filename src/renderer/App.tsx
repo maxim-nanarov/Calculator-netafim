@@ -6,10 +6,6 @@ import Data from './data';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Calculate = (event: any) => {
-  event.preventDefault();
-};
-
 const Hello = () => {
   const [Dripper, setDripper] = useState<Array<object>>();
   const [DripperData, setDripperData] = useState<Array<Object>>();
@@ -18,7 +14,7 @@ const Hello = () => {
   const [SDripper, setSDripper] = useState<number>();
   const [Pipes, setPipes] = useState<Array<object>>();
   const [PipesSelect, setPipesSelect] = useState<JSX.Element[]>();
-  const [SPipe, setSPipe] = useState<number>();
+  const [SPipe, setSPipe] = useState<any>();
   const [Length, setLength] = useState<number>(0);
   const [Slope, setSlope] = useState(0);
   const [SP, setSP] = useState(0.15);
@@ -78,6 +74,7 @@ const Hello = () => {
       let count = -1;
       let a = Pipes.map((data: any) => {
         count++;
+        console.log(data);
         return (
           <option
             key={count}
@@ -104,8 +101,8 @@ const Hello = () => {
         return (
           <option
             key={count}
-            value={data.id}
-            onChange={(event) => setSDripper(data.id)}
+            value={Number(data.id)}
+            onChange={(event) => setSDripper(Number(data.id))}
           >
             {data.Dripper_Type}
           </option>
@@ -137,28 +134,16 @@ const Hello = () => {
     let Dlat: number; //V
     Dlat = SPipe.Diameter;
 
-    // if (Pipes !== undefined) {
-    //   Pipes.forEach((Data: any) => {
-    //     if (SPipe === Data.Model) {
-    //       console.log('The Condition for finding the Dlat has happend');
-    //       Dlat = Data.Diameter;
-    //     }
-    //   });
-    // } else {
-    //   Dlat = 0;
-    // }
     let Dp = dp;
 
     let Q1: number = k * Math.pow(dp, 0.5);
     let Qd: number = 0;
 
     for (let i = 0; i < Length; i = i + sp) {
-      Qd = k * Math.pow(Dp, x);
+      Qd = k * Math.pow(Dp, x); //Is there a need for QD beeing inside the loop?
       Q1 += Qd;
-      console.log(Qd);
-      Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, k) + Ps(Slope, Length);
+      Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, k) + Ps(Slope, Length); // Am I doing the pressure right?
     }
-    console.log(Dp);
     setResultsQ(Math.floor(Q1));
 
     function Phw(Qlat: number, Dlat: number, sp: number) {
