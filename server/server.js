@@ -154,7 +154,7 @@ app.post('/Delete_From_Dripper_Pipes', (req, res) => {
     res.send({ success: true });
   });
 });
-//Crud Functions to the Dripper Pipes Table
+//Crud Functions to the Dripper Data Table
 app.post('/Update_Drippers_Data', (req, res) => {
   console.log(req.body);
   const data = req.body.data.Edit;
@@ -169,20 +169,20 @@ app.post('/Update_Drippers_Data', (req, res) => {
 });
 
 app.post('/Insert_Into_Dripper_Data', (req, res) => {
-  console.log(req.body);
-  const data = req.body;
-  console.log(Dripper_Id, Pipe_Model);
+  console.log(req.body.data.formData);
+  const data = req.body.data.formData;
+  console.log('Dripper ID: ' + data.Dripper_Id);
   let id = 0;
   db.all(
-    `SELECT Data_id FROM Dripper_Data order by Data_id desc limit 1`,
+    `SELECT Data_id FROM Drippers_Data order by Data_id desc limit 1`,
     (err, row) => {
       if (err) {
         console.log(err);
       } else {
-        console.log(row[0].id + 1);
-        id = row[0].id + 1;
+        console.log(row[0].Data_id + 1);
+        id = row[0].Data_id + 1;
         console.log('id: ' + id);
-        let sql = `INSERT INTO Dripper_Data (Data_id,Dripper_id, flow_rate,k,Pressure,Exponent) VALUES (${data.Data_id},${data.Dripper_Id},${data.flow_rate},${data.k},${data.Pressure},${data.Exponent})`;
+        let sql = `INSERT INTO Drippers_Data (Data_id,Dripper_id, flow_rate,k,Pressure,Exponent) VALUES (${id},${data.Dripper_Id},${data.Flow_Rate},${data.Coefficency},${data.Pressure},${data.Exponent})`;
         db.all(sql, (err, rows) => {
           if (err) {
             res.send({ success: false, error: err.message });
@@ -197,14 +197,15 @@ app.post('/Insert_Into_Dripper_Data', (req, res) => {
 
 app.post('/Delete_From_Dripper_Data', (req, res) => {
   console.log(req.body);
-  const Data_id = req.body.Data_id;
-
-  let sql = `DELETE FROM Dripper_Data WHERE Data_id = ${Data_id}`;
+  const Data_id = req.body.id;
+  console.log(Data_id);
+  let sql = `DELETE FROM Drippers_Data WHERE Data_id = ${Data_id}`;
   db.all(sql, (err, rows) => {
     if (err) {
       res.send({ success: false, error: err.message });
+    } else {
+      res.send({ success: true });
     }
-    res.send({ success: true });
   });
 });
 

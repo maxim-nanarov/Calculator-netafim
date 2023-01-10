@@ -7,8 +7,9 @@ export default function DripperS() {
   const [DripperData, setDripperData] = useState<any>();
   const [Dripper_Data_Display, setDripper_Data_Display] = useState<any>();
   const [Edit, setEdit] = useState<any>();
-  const [Delete, setDelete] = useState<any>();
-  const [DeleteDisplay, setDeleteDisplay] = useState<any>();
+  const [DeleteIndex, setDelete] = useState<any>();
+  const [isAdding, setIsAdding] = useState<boolean>(false);
+  const [AddingDisplay, setAddingDisplay] = useState<any>();
   const [EditDisplay, setEditDisplay] = useState<any>();
   const [Updater, setUpdater] = useState<number>(0);
   let a: any;
@@ -55,7 +56,8 @@ export default function DripperS() {
             <th>
               <Button
                 onClick={() => {
-                  setDelete(data.Dripper_id);
+                  setDelete(data.Data_id);
+                  Delete();
                 }}
               >
                 DELETE
@@ -64,9 +66,59 @@ export default function DripperS() {
           </tr>
         );
       });
+      if (isAdding) {
+      }
       setDripper_Data_Display(a);
     }
-  }, [DripperData, EditDisplay]);
+  }, [DripperData, EditDisplay, isAdding]);
+
+  useEffect(() => {
+    if (isAdding) {
+      setAddingDisplay(
+        <div className="Adding-Dripper-Pipes">
+          <form
+            id="AddForm"
+            className="Adding-Dripper-Pipes-from"
+            onSubmit={Insert}
+          >
+            <input
+              placeholder="Dripper Id"
+              id="Dripper_Id"
+              name="Dripper_Id"
+            ></input>
+
+            <input
+              placeholder="flow rate"
+              id="Flow_Rate"
+              name="Flow_Rate"
+            ></input>
+            <input
+              placeholder="Coefficency"
+              id="Coefficency"
+              name="Coefficency"
+            ></input>
+            <input placeholder="Pressure" id="Pressure" name="Pressure"></input>
+            <input placeholder="Exponent" id="Exponent" name="Exponent"></input>
+            <div>
+              <Button
+                onClick={() => {
+                  setIsAdding(!isAdding);
+                }}
+              >
+                Cancle
+              </Button>
+
+              <Button form="AddForm" type="submit" value="Submit">
+                Add
+              </Button>
+            </div>
+          </form>
+        </div>
+      );
+    } else {
+      setAddingDisplay(<></>);
+    }
+  }, [isAdding]);
 
   useEffect(() => {
     if (Edit === undefined) return undefined;
@@ -160,6 +212,37 @@ export default function DripperS() {
       });
   }
 
+  function Delete() {
+    axios
+      .post('http://localhost:3000/Delete_From_Dripper_Data', {
+        id: DeleteIndex,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function Insert(e: any) {
+    e.preventDefault();
+    let formData: any = new FormData(e.target);
+    formData = Object.fromEntries(formData);
+    console.log(formData);
+    axios
+      .post('http://localhost:3000/Insert_Into_Dripper_Data', {
+        data: { formData },
+      })
+      .then((res) => {
+        console.log(res);
+        console.log('Worked!');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
     <div>
       <h1>Drippers Data</h1>
@@ -176,7 +259,7 @@ export default function DripperS() {
             <th>
               <Button
                 onClick={() => {
-                  alert('Add');
+                  setIsAdding(!isAdding);
                 }}
               >
                 Add
@@ -186,6 +269,7 @@ export default function DripperS() {
         </thead>
         <tbody>{Dripper_Data_Display}</tbody>
       </Table>
+      {AddingDisplay}
     </div>
   );
 }
