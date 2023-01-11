@@ -1,4 +1,3 @@
-const MapboxClient = require('@mapbox/electron-sdk');
 import React from 'react';
 
 // const client = new MapboxClient(YOUR_API_ACCESS_TOKEN);

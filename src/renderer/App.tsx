@@ -3,7 +3,7 @@ import './App.css';
 import './App.scss';
 import Input from './Input';
 import Data from './data';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 
 const Hello = () => {
@@ -117,12 +117,11 @@ const Hello = () => {
 
   useEffect(() => {
     if (ResultsQ !== undefined) {
-      let a = (
+      setA(
         <div className="Results">
           <label>Q: {ResultsQ} L/H</label>
         </div>
       );
-      setA(a);
     }
   }, [ResultsQ]);
 
@@ -137,28 +136,32 @@ const Hello = () => {
 
     let Dp = dp;
 
-    let Q1: number = k * Math.pow(dp, 0.5);
+    let Q1: number = 0 * Math.pow(dp, 0.5);
     let Qd: number = 0;
-
-    for (let i = 0; i < Length; i = i + sp) {
+    let leng = Length / sp;
+    for (let i = 0; i <= leng; i++) {
       Qd = k * Math.pow(Dp, x); //Is there a need for QD beeing inside the loop?
       Q1 += Qd;
-      Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, k) + Ps(Slope, Length); // Am I doing the pressure right?
+      console.log('the slope * seperations: ', Ps(Slope, Length));
+      Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, k) + Ps(Slope, sp); // Am I doing the pressure right?
     }
-    setResultsQ(Math.floor(Q1));
-
+    setResultsQ(Q1);
+    console.log('QD: ' + Qd);
+    console.log('Dp: ' + Dp);
+    console.log('Q1: ' + Q1);
+    //the tube with the drippers
     function Phw(Qlat: number, Dlat: number, sp: number) {
       let Q = Math.pow(Qlat, 1.76);
       let D = Math.pow(Dlat, -4.76);
       return 0.4364 * Q * D * sp;
     }
-
+    //the tube
     function Pd(Qlat: number, Dlat: number, kd: number) {
       let Q = Math.pow(Qlat, 2);
       let D = Math.pow(Dlat, -4);
       return 6.367 * Math.pow(10, -3) * Q * D * kd;
     }
-
+    //slope and length
     function Ps(Slope: number, Length: number) {
       return Slope * Length;
     }
@@ -237,7 +240,7 @@ const Hello = () => {
           </div>
           <button onClick={Calculate}>Submit</button>
         </div>
-        {a}
+        <div>{a}</div>
       </div>
     </div>
   );
