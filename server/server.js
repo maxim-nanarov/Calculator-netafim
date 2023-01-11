@@ -236,6 +236,11 @@ app.post('/Delete_From_Pipes', (req, res) => {
     }
   });
 });
+
+app.post('/Update_Pipes', (req, res) => {
+  let data = req.body;
+  console.log(req.body);
+});
 // Start the server
 app.listen(3000, () => {
   console.log('Server listening on port 3000. (http://localhost:3000/users)');
