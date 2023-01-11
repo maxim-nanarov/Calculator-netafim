@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const Hello = () => {
   const [Dripper, setDripper] = useState<Array<object>>();
-  const [DripperData, setDripperData] = useState<Array<Object>>();
+  const [DripperData, setDripperData] = useState<any>();
   const [ResultsQ, setResultsQ] = useState<Number>();
   const [DripperSelect, setDripperSelect] = useState<JSX.Element[]>();
   const [SDripper, setSDripper] = useState<number>();
@@ -59,6 +59,8 @@ const Hello = () => {
       axios
         .get(`http://localhost:3000/Get_Relevent_Pipes?id=${SDripper}`)
         .then((res) => {
+          console.log(SDripper);
+          console.log(res.data.data);
           setPipes(res.data.data);
           setSPipe(res.data.data[0]);
         })
@@ -74,7 +76,6 @@ const Hello = () => {
       let count = -1;
       let a = Pipes.map((data: any) => {
         count++;
-        console.log(data);
         return (
           <option
             key={count}
