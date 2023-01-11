@@ -285,6 +285,18 @@ app.post('/Delete_from_Dripper', (req, res) => {
     }
   });
 });
+app.post('/Update_Dripper', (req, res) => {
+  let data = req.body;
+  console.log(data.Edited);
+  let sql = `UPDATE DRIPPERS SET DRIPPER_TYPE='${data.Edited.Dripper_Type}' Where id='${data.Edited.id}';`;
+  db.all(sql, (err, rows) => {
+    if (err) {
+      res.send({ success: false, error: err.message });
+    } else {
+      res.send({ success: true });
+    }
+  });
+});
 // Start the server
 app.listen(3000, () => {
   console.log('Server listening on port 3000. (http://localhost:3000/users)');

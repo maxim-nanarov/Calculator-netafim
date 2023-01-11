@@ -11,6 +11,8 @@ export default function Dripper_Table() {
   const [AddDisplay, setAddDisplay] = useState<any>();
   const [Updater, setUpdater] = useState<number>(0);
   const [DeleteIndex, setDeleteIndex] = useState<number>();
+  const [Edit, setEdit] = useState<any>();
+  const [EditDisplay, setEditDisplay] = useState<any>();
 
   useEffect(() => {
     axios
@@ -41,6 +43,9 @@ export default function Dripper_Table() {
       a = Drippers.map((row: any) => {
         count++;
         if (DeleteIndex === row.id) return <></>;
+        if (Edit !== undefined) {
+          if (Edit.id === row.id) return EditDisplay;
+        }
         return (
           <tr key={count}>
             <th>{row.id}</th>
@@ -48,7 +53,7 @@ export default function Dripper_Table() {
             <th>
               <Button
                 onClick={() => {
-                  alert(row.id);
+                  setEdit(row);
                 }}
               >
                 Edit
@@ -73,7 +78,48 @@ export default function Dripper_Table() {
         'Drippers is null, or something that just the life cycle beeing weird'
       );
     }
-  }, [Drippers, DeleteIndex]);
+  }, [Drippers, DeleteIndex, EditDisplay]);
+
+  useEffect(() => {
+    if (Edit === undefined) {
+      setEditDisplay(<></>);
+    } else {
+      let helper = Edit;
+      setEditDisplay(
+        <tr key="EditRow">
+          <th>{Edit.id}</th>
+          <th>
+            <input
+              placeholder="Dripper's name"
+              defaultValue={Edit.Dripper_Type}
+              onChange={(e) => {
+                helper.Dripper_Type = e.target.value;
+              }}
+            ></input>
+          </th>
+          <th>
+            <Button
+              onClick={() => {
+                Update(helper);
+              }}
+            >
+              Update
+            </Button>
+          </th>
+          <th>
+            {' '}
+            <Button
+              onClick={() => {
+                Delete(helper.id);
+              }}
+            >
+              Delete
+            </Button>
+          </th>
+        </tr>
+      );
+    }
+  }, [Edit]);
 
   useEffect(() => {
     if (!isAdding) {
@@ -136,6 +182,19 @@ export default function Dripper_Table() {
         let num = Updater;
         num = num + 1;
         setUpdater(num);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function Update(Edited: any) {
+    console.log(Edited);
+    axios
+      .post('http://localhost:3000/Update_Dripper', { Edited })
+      .then((res) => {
+        console.log('Success! ');
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
