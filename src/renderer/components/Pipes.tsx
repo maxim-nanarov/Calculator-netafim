@@ -204,7 +204,15 @@ function Pipes_Table() {
 
   function Update(Edited: any) {
     console.log(Edited);
-    axios.put('http://localhost:3000/Update_Pipes', { Edited });
+    axios
+      .post('http://localhost:3000/Update_Pipes', { Edited })
+      .then((res) => {
+        setEdit(-1);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (

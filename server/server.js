@@ -238,8 +238,16 @@ app.post('/Delete_From_Pipes', (req, res) => {
 });
 
 app.post('/Update_Pipes', (req, res) => {
-  let data = req.body;
-  console.log(req.body);
+  let data = req.body.Edited;
+  console.log(data);
+  let sql = `UPDATE PIPES SET  DIAMETER=${data.Diameter}, Pressure=${data.Pressure},kd=${data.kd} WHERE Models=${data.Models};`;
+  db.all(sql, (err, rows) => {
+    if (err) {
+      res.send({ success: false, error: err.message });
+    } else {
+      res.send({ success: true });
+    }
+  });
 });
 // Start the server
 app.listen(3000, () => {
