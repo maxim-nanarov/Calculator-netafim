@@ -88,12 +88,13 @@ app.get('/DData', (req, res, next) => {
 
 app.get('/Get_Relevent_Pipes', (req, res) => {
   const id = req.query.id;
-  let sql = `Select * from Pipes Where Models IN (Select Models from Dripper_Pipes Where dripper_id = ${id})`;
+  let sql = `Select * from Pipes Where Models IN (Select Pipe_Model from Dripper_Pipes Where Dripper_id = ${id});`;
   db.all(sql, (err, rows) => {
     if (err) {
       console.log(err);
       res.send({ success: false, error: err.message });
     } else {
+      console.log(rows);
       res.send({ success: true, data: rows });
     }
   });
@@ -196,7 +197,6 @@ app.post('/Insert_Into_Dripper_Data', (req, res) => {
 });
 
 app.post('/Delete_From_Dripper_Data', (req, res) => {
-  console.log(req.body);
   const Data_id = req.body.id;
   console.log(Data_id);
   let sql = `DELETE FROM Drippers_Data WHERE Data_id = ${Data_id}`;
@@ -208,7 +208,34 @@ app.post('/Delete_From_Dripper_Data', (req, res) => {
     }
   });
 });
+//Crud functions to the Pipes Tables
+app.post('/Insert_Into_Pipes', (req, res) => {
+  console.log(req.body.data.formData);
+  let data = req.body.data.formData;
+  console.log('does it even enter?');
+  let sql = `INSERT INTO PIPES (Models,Diameter,Pressure,kd) VALUES(${data.Model},${data.Diameter},${data.Pressure},${data.kd});`;
+  db.all(sql, (err, rows) => {
+    if (err) {
+      res.send({ success: false, error: err.message });
+    } else {
+      console.log('Worked');
+      res.send({ success: true });
+    }
+  });
+});
 
+app.post('/Delete_From_Pipes', (req, res) => {
+  const Model = req.body.Model;
+  console.log(Model);
+  let sql = `DELETE FROM Pipes WHERE Models = ${Model}`;
+  db.all(sql, (err, rows) => {
+    if (err) {
+      res.send({ success: false, error: err.message });
+    } else {
+      res.send({ success: true });
+    }
+  });
+});
 // Start the server
 app.listen(3000, () => {
   console.log('Server listening on port 3000. (http://localhost:3000/users)');
