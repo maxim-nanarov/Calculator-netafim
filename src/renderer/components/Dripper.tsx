@@ -7,6 +7,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default function Dripper_Table() {
   const [Drippers, setDrippers] = useState<any>();
   const [Dripper_Display, setDripper_Display] = useState<any>();
+  const [isAdding, setIsAdding] = useState<boolean>();
+  const [AddDisplay, setAddDisplay] = useState<any>();
+  const [Updater, setUpdater] = useState<number>(0);
+  const [DeleteIndex, setDeleteIndex] = useState<number>();
 
   useEffect(() => {
     axios
@@ -20,11 +24,23 @@ export default function Dripper_Table() {
   }, []);
 
   useEffect(() => {
+    axios
+      .get('http://localhost:3000/Drippers')
+      .then((res) => {
+        setDrippers(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [Updater]);
+
+  useEffect(() => {
     let a: any;
     if (Drippers !== undefined) {
       let count = -1;
       a = Drippers.map((row: any) => {
         count++;
+        if (DeleteIndex === row.id) return <></>;
         return (
           <tr key={count}>
             <th>{row.id}</th>
@@ -42,7 +58,7 @@ export default function Dripper_Table() {
               {' '}
               <Button
                 onClick={() => {
-                  alert(row.id);
+                  Delete(row.id);
                 }}
               >
                 Delete
@@ -57,7 +73,74 @@ export default function Dripper_Table() {
         'Drippers is null, or something that just the life cycle beeing weird'
       );
     }
-  }, [Drippers]);
+  }, [Drippers, DeleteIndex]);
+
+  useEffect(() => {
+    if (!isAdding) {
+      setAddDisplay(<></>);
+    } else {
+      setAddDisplay(
+        <div>
+          <form
+            id="AddForm"
+            className="Adding-Dripper-Pipes-from"
+            onSubmit={Insert}
+          >
+            <input
+              placeholder="Name of the Dripper"
+              name="Name"
+              id="Name"
+            ></input>
+            <Button
+              onClick={() => {
+                setIsAdding(!isAdding);
+              }}
+            >
+              Cancle
+            </Button>
+            <Button form="AddForm" type="submit" value="Submit">
+              Insert
+            </Button>
+          </form>
+        </div>
+      );
+    }
+  }, [isAdding]);
+
+  function Insert(e: any) {
+    e.preventDefault();
+    let formData: any = new FormData(e.target);
+    formData = Object.fromEntries(formData);
+    console.log(formData);
+    axios
+      .post('http://localhost:3000/Insert_Into_Dripper', { formData })
+      .then((res) => {
+        console.log('Success! ');
+        console.log(res);
+        setIsAdding(!isAdding);
+        let num = Updater;
+        num = num + 1;
+        setUpdater(num);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function Delete(Index: number) {
+    axios
+      .post('http://localhost:3000/Delete_from_Dripper', { Index })
+      .then((res) => {
+        console.log(res);
+        setDeleteIndex(Index);
+        let num = Updater;
+        num = num + 1;
+        setUpdater(num);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <div>
@@ -71,7 +154,7 @@ export default function Dripper_Table() {
             <th>
               <Button
                 onClick={() => {
-                  alert('Add Button');
+                  setIsAdding(!isAdding);
                 }}
               >
                 Add
@@ -81,6 +164,7 @@ export default function Dripper_Table() {
         </thead>
         <tbody>{Dripper_Display}</tbody>
       </Table>
+      {AddDisplay}
     </div>
   );
 }

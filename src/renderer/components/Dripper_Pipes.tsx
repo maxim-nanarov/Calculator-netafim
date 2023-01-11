@@ -19,7 +19,6 @@ export default function Dripper_Pipe() {
       .get('http://localhost:3000/Dripper_Pipes')
       .then((res) => {
         setDripper_Pipe(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -29,7 +28,6 @@ export default function Dripper_Pipe() {
   //the display
   useEffect(() => {
     let count = -1;
-    console.log(Dripper_Pipes);
     if (Dripper_Pipes !== undefined) {
       let a = Dripper_Pipes.map((data: any) => {
         count++;
@@ -169,7 +167,6 @@ export default function Dripper_Pipe() {
         console.log('Success! ' + res);
         let num = Updater;
         num = num + 1;
-        console.log(Updater, num);
         setUpdater(num++);
       })
       .catch((err) => {
@@ -179,7 +176,6 @@ export default function Dripper_Pipe() {
   // the edit function
   function Submit() {
     // Update to the Dripper_Pipes Table
-    console.log(Edit);
     axios
       .post('http://localhost:3000/Update_Dripper_Pipes', {
         id: Edit.id,
@@ -201,7 +197,6 @@ export default function Dripper_Pipe() {
     e.preventDefault();
     let formData: any = new FormData(e.target);
     formData = Object.fromEntries(formData);
-    console.log(formData);
     axios
       .post('http://localhost:3000/Insert_Into_Dripper_Pipes', {
         Dripper_Id: formData.Dripper_Id,

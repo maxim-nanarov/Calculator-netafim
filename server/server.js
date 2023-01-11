@@ -249,6 +249,42 @@ app.post('/Update_Pipes', (req, res) => {
     }
   });
 });
+//Crud functions to the Dripper Tables
+app.post('/Insert_Into_Dripper', (req, res) => {
+  console.log(req.body);
+  const data = req.body.formData;
+  let id = 0;
+  db.all(`SELECT id FROM Drippers order by id desc limit 1`, (err, row) => {
+    if (err) {
+      res.send({ success: false, error: err.message });
+    } else {
+      console.log(row[0].id + 1);
+      id = row[0].id + 1;
+      console.log('id: ' + id);
+      console.log(data.Name);
+      let sql = `INSERT INTO Drippers (id,Dripper_Type) VALUES ('${id}','${data.Name}');`;
+      db.all(sql, (err, rows) => {
+        if (err) {
+          res.send({ success: false, error: err.message });
+        } else {
+          res.send({ success: true });
+        }
+      });
+    }
+  });
+});
+app.post('/Delete_from_Dripper', (req, res) => {
+  let index = req.body.Index;
+  console.log(req.body.Index);
+  sql = `DELETE FROM DRIPPERS WHERE id=${index}`;
+  db.all(sql, (err, row) => {
+    if (err) {
+      res.send({ success: false, error: err.message });
+    } else {
+      res.send({ success: true });
+    }
+  });
+});
 // Start the server
 app.listen(3000, () => {
   console.log('Server listening on port 3000. (http://localhost:3000/users)');
