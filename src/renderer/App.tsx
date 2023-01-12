@@ -7,6 +7,7 @@ import { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 
 const Hello = () => {
+  const [kf, setkf] = useState<number>();
   const [Dripper, setDripper] = useState<Array<object>>();
   const [DripperData, setDripperData] = useState<any>();
   const [ResultsQ, setResultsQ] = useState<Number>();
@@ -19,6 +20,7 @@ const Hello = () => {
   const [Slope, setSlope] = useState(0);
   const [SP, setSP] = useState(0.15);
   const [dp, setDP] = useState(0);
+  const [ResultsDp, setResultsDp] = useState<number>();
   const [a, setA] = useState<any>();
   //In here the functions help with the display
   //* of the slope of the line
@@ -120,36 +122,48 @@ const Hello = () => {
       setA(
         <div className="Results">
           <label>Q: {ResultsQ} L/H</label>
+          <label>Dp: {ResultsDp}</label>
         </div>
       );
     }
   }, [ResultsQ]);
 
   const Calculate = (event: any) => {
-    let sp = SP;
+    if (kf === undefined) {
+      setkf(0);
+    }
 
+    let sp = SP;
+    console.log(DripperData);
     //the error is unnecessary
     let k = DripperData![SDripper!].k; //V
     let x = DripperData![SDripper!].Exponent; //V
+    let Pc = DripperData![SDripper!].Pressure; //V
     let Dlat: number; //V
     Dlat = SPipe.Diameter;
-
+    let Q1 = 0;
     let Dp = dp;
+    if (Dp < pc) {
+      Q1 = kf * Math.pow(Dp, 0.5);
+    } else {
+      Q1 = kf * Math.pow(Pc, x);
+    }
 
-    let Q1: number = 0 * Math.pow(dp, 0.5);
     let Qd: number = 0;
     let leng = Length / sp;
     for (let i = 0; i <= leng; i++) {
-      Qd = k * Math.pow(Dp, x); //Is there a need for QD beeing inside the loop?
+      if (Dp < Pc) {
+        Qd = k * Math.pow(Dp, x); //Is there a need for QD beeing inside the loop?
+      } else {
+        Qd = k * Math.pow(Pc, x);
+      }
       Q1 += Qd;
       console.log('the slope * seperations: ', Ps(Slope, Length));
       Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, k) + Ps(Slope, sp); // Am I doing the pressure right?
     }
     setResultsQ(Q1);
-    console.log('QD: ' + Qd);
-    console.log('Dp: ' + Dp);
-    console.log('Q1: ' + Q1);
-    //the tube with the drippers
+    setResultsDp(Dp);
+
     function Phw(Qlat: number, Dlat: number, sp: number) {
       let Q = Math.pow(Qlat, 1.76);
       let D = Math.pow(Dlat, -4.76);
@@ -209,6 +223,13 @@ const Hello = () => {
             placeholder="Length"
             onChange={(event) => {
               setLength(Number(event.target.value));
+            }}
+          ></input>
+          <input
+            type="number"
+            placeholder="The coefficency of the dripper in the end of the line"
+            onChange={(event) => {
+              setkf(Number(event.target.value));
             }}
           ></input>
           <div className="Range">
