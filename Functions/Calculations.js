@@ -1,5 +1,6 @@
-function Calculate(k, kf, x, Dlat, Dp, pc, Length, sp, Slope) {
+function Calculate(k, kd, kf, x, Dlat, Dp, pc, Length, sp, Slope) {
   console.log('k: ' + k);
+  console.log('kd: ' + kd);
   console.log('kf: ' + kf);
   console.log('x: ' + x);
   console.log('Dlat: ' + Dlat);
@@ -12,7 +13,7 @@ function Calculate(k, kf, x, Dlat, Dp, pc, Length, sp, Slope) {
   if (Dp < pc) {
     Q1 = kf * Math.pow(Dp, 0.5);
   } else {
-    Q1 = kf * Math.pow(pc, x);
+    Q1 = kf * Math.pow(pc, 0.5);
   }
   console.log(Q1);
   let Qd = 0;
@@ -50,5 +51,5 @@ console.log('Uni Ram first option (from the Table)');
 console.log('and 16009 pipe');
 
 //the functions is taking the parameters in this order:
-// Calculate(k, kf, x, Dlat, Dp, pc, Length, sp, Slope
-Calculate(0.7, 3, 0, 14.2, 3, 0.5, 1, 1, 0);
+// Calculate(k,kd ,kf, x, Dlat, Dp, pc, Length, sp, Slope
+Calculate(0.1, 1.3, 0, 0.5, 14.2, 3.5, 5, 10, 0.5, 5);
