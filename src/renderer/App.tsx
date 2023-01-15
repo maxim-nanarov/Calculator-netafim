@@ -143,7 +143,7 @@ const Hello = () => {
     Dlat = SPipe.Diameter;
     let Q1 = 0;
     let Dp = dp;
-    if (Dp < pc) {
+    if (Dp < Pc) {
       Q1 = kf * Math.pow(Dp, 0.5);
     } else {
       Q1 = kf * Math.pow(Pc, x);
