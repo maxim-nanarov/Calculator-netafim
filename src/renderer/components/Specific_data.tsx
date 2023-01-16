@@ -5,8 +5,10 @@ import { Table } from 'react-bootstrap';
 export default function Specific_data(prop: any) {
   const [Display, setDisplay] = useState<any>();
   const [id, setId] = useState<number>();
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState<number>(-1);
   const [DripperData, setDripperData] = useState<any>();
+  const [SData, setSData] = useState<any>();
+
   useEffect(() => {
     setId(prop.id);
   });
@@ -15,7 +17,7 @@ export default function Specific_data(prop: any) {
       .get(`http://localhost:3000/Get_Specified_Data?id=${id}`)
       .then((res) => {
         console.log(prop.id);
-        console.log(res.data.data);
+        console.log(res.data);
         setDripperData(res.data.data);
       })
       .catch((err) => {
@@ -24,21 +26,28 @@ export default function Specific_data(prop: any) {
   }, [id]);
 
   useEffect(() => {
-    let a = <></>;
+    if (SData !== undefined) {
+      console.log(SData);
+    }
+  }, [SData]);
+
+  useEffect(() => {
     if (DripperData !== undefined) {
       let count = -1;
-      a = DripperData.map((data: any) => {
+      const a = DripperData.map((data: any) => {
         count++;
-        console.log('Data');
-        console.log(data);
         return (
-          <tr>
+          <tr key={count}>
             <th>
               <input
-                type="checkbox"
-                checked={checked}
-                onChange={handleChange}
-                value={data}
+                type="radio"
+                checked={checked === data.Data_id}
+                onChange={() => {
+                  console.log(checked);
+                  console.log(data.Data_id);
+                  setChecked(data.Data_id);
+                  setSData(data);
+                }}
               ></input>
             </th>
             <th>{data.Dripper_id}</th>
@@ -49,14 +58,9 @@ export default function Specific_data(prop: any) {
           </tr>
         );
       });
+      setDisplay(a);
     }
-    setDisplay(a);
-  }, [DripperData]);
-
-  const handleChange = (event: any) => {
-    console.log(event.target.value);
-    setChecked(event.target.checked); // update state when checkbox value changes
-  };
+  }, [DripperData, checked]);
 
   return (
     <Table striped bordered hover size="sm">
