@@ -16,8 +16,6 @@ export default function Specific_data(prop: any) {
     axios
       .get(`http://localhost:3000/Get_Specified_Data?id=${id}`)
       .then((res) => {
-        console.log(prop.id);
-        console.log(res.data);
         setDripperData(res.data.data);
       })
       .catch((err) => {
@@ -28,8 +26,15 @@ export default function Specific_data(prop: any) {
   useEffect(() => {
     if (SData !== undefined) {
       console.log(SData);
+      console.log(prop);
+      prop.onDataChange(SData);
     }
   }, [SData]);
+
+  const handleChange = (data: any) => {
+    console.log(data);
+    console.log(prop.onDataChange(data));
+  };
 
   useEffect(() => {
     if (DripperData !== undefined) {
@@ -43,10 +48,8 @@ export default function Specific_data(prop: any) {
                 type="radio"
                 checked={checked === data.Data_id}
                 onChange={() => {
-                  console.log(checked);
-                  console.log(data.Data_id);
                   setChecked(data.Data_id);
-                  setSData(data);
+                  handleChange(data);
                 }}
               ></input>
             </th>

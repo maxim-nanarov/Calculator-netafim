@@ -8,7 +8,7 @@ import axios from 'axios';
 import Specific_data from './components/Specific_data';
 
 const Hello = () => {
-  const [kf, setkf] = useState<number>();
+  const [kf, setkf] = useState<number>(0);
   const [Dripper, setDripper] = useState<Array<object>>();
   const [DripperData, setDripperData] = useState<any>();
   const [ResultsQ, setResultsQ] = useState<Number>();
@@ -24,6 +24,7 @@ const Hello = () => {
   const [dp, setDP] = useState(0);
   const [ResultsDp, setResultsDp] = useState<number>();
   const [a, setA] = useState<any>();
+
   //In here the functions help with the display
   //* of the slope of the line
   //* and seperation from each dripper
@@ -47,16 +48,8 @@ const Hello = () => {
       .catch((err) => {
         console.log(err);
       });
-
-    axios
-      .get('http://localhost:3000/DData')
-      .then((res) => {
-        setDripperData(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }, []);
+
   //gets the relevent dripper data for the user to choose:
   //get's the specifc pipes for the chosen dripper
   useEffect(() => {
@@ -72,7 +65,12 @@ const Hello = () => {
         .catch((err) => {
           console.log(err);
         });
-      setSDripperDisplay(<Specific_data id={SDripper}></Specific_data>);
+      setSDripperDisplay(
+        <Specific_data
+          onDataChange={getChildData}
+          id={SDripper}
+        ></Specific_data>
+      );
     }
   }, [SDripper]);
   //takes the pipes table and display it in the select menu
@@ -130,7 +128,7 @@ const Hello = () => {
         </div>
       );
     }
-  }, [ResultsQ]);
+  }, [ResultsQ, ResultsDp]);
 
   const Calculate = (event: any) => {
     if (kf === undefined) {
@@ -138,11 +136,12 @@ const Hello = () => {
     }
 
     let sp = SP;
+    console.log('This data came from far far away and is here to be with us');
     console.log(DripperData);
-    //the error is unnecessary
-    let k = DripperData![SDripper!].k; //V
-    let x = DripperData![SDripper!].Exponent; //V
-    let Pc = DripperData![SDripper!].Pressure; //V
+
+    let k = DripperData.k; //V
+    let x = DripperData.Exponent; //V
+    let Pc = DripperData.Pressure; //V
     let Dlat: number; //V
     Dlat = SPipe.Diameter;
     let Q1 = 0;
@@ -150,7 +149,7 @@ const Hello = () => {
     if (Dp < Pc) {
       Q1 = kf * Math.pow(Dp, 0.5);
     } else {
-      Q1 = kf * Math.pow(Pc, x);
+      Q1 = kf * Math.pow(Pc, 0.5);
     }
 
     let Qd: number = 0;
@@ -162,8 +161,10 @@ const Hello = () => {
         Qd = k * Math.pow(Pc, x);
       }
       Q1 += Qd;
-      console.log('the slope * seperations: ', Ps(Slope, Length));
       Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, k) + Ps(Slope, sp); // Am I doing the pressure right?
+      console.log('the slope * seperations: ', Ps(Slope, Length));
+      console.log('the DP: ' + Dp);
+      console.log('the Q: ' + Q1);
     }
     setResultsQ(Q1);
     setResultsDp(Dp);
@@ -183,6 +184,12 @@ const Hello = () => {
     function Ps(Slope: number, Length: number) {
       return Slope * Length;
     }
+  };
+
+  const getChildData = (dataFromChild: any) => {
+    console.log('This is the parent component');
+    console.log(dataFromChild);
+    setDripperData(dataFromChild);
   };
 
   return (
