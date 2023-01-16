@@ -111,6 +111,21 @@ app.get('/Get_Specified_Data', (req, res) => {
     }
   });
 });
+//gets the kd in corolation to the dripper id and the
+// pipe model
+app.get('/Get_Kd_DripperId_PipeModel', (req, res) => {
+  const id = req.query.Dripper_id;
+  const model = req.query.Model;
+  console.log(id, model);
+  sql = `SELECT kd FROM DRIPPER_PIPES where Dripper_id = ${id} AND Pipe_Model = ${model}`;
+  db.all(sql, (err, rows) => {
+    if (err) {
+      res.send({ success: false, error: err.message });
+    } else {
+      res.send({ success: true, data: rows });
+    }
+  });
+});
 //Crud Functions to the DRIPPER PIPES table
 app.post('/Update_Dripper_Pipes', (req, res) => {
   console.log(req.body);

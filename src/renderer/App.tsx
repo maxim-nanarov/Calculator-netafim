@@ -24,6 +24,7 @@ const Hello = () => {
   const [dp, setDP] = useState(0);
   const [ResultsDp, setResultsDp] = useState<number>();
   const [a, setA] = useState<any>();
+  const [kd, setKD] = useState<any>();
 
   //In here the functions help with the display
   //* of the slope of the line
@@ -49,6 +50,26 @@ const Hello = () => {
         console.log(err);
       });
   }, []);
+
+  //when the user chooses the dripper and the pipe
+  //this functions get's the kd
+  useEffect(() => {
+    if (SDripper !== undefined && SPipe !== undefined) {
+      console.log('Starting the search for the kd');
+      console.log(SDripper, SPipe.Models);
+      axios
+        .get(
+          `http://localhost:3000/Get_Kd_DripperId_PipeModel?Dripper_id=${SDripper}&Model=${SPipe.Models}`
+        )
+        .then((res) => {
+          console.log(res.data.data[0].kd);
+          setKD(res.data.data[0].kd);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [SDripper, SPipe]);
 
   //gets the relevent dripper data for the user to choose:
   //get's the specifc pipes for the chosen dripper
@@ -136,9 +157,7 @@ const Hello = () => {
     }
 
     let sp = SP;
-    console.log('This data came from far far away and is here to be with us');
-    console.log(DripperData);
-
+    let kd = SPipe.kd;
     let k = DripperData.k; //V
     let x = DripperData.Exponent; //V
     let Pc = DripperData.Pressure; //V
@@ -161,10 +180,7 @@ const Hello = () => {
         Qd = k * Math.pow(Pc, x);
       }
       Q1 += Qd;
-      Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, k) + Ps(Slope, sp); // Am I doing the pressure right?
-      console.log('the slope * seperations: ', Ps(Slope, Length));
-      console.log('the DP: ' + Dp);
-      console.log('the Q: ' + Q1);
+      Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, kd) + Ps(Slope, sp); // Am I doing the pressure right?
     }
     setResultsQ(Q1);
     setResultsDp(Dp);
