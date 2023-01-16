@@ -8,6 +8,9 @@ import axios from 'axios';
 import Specific_data from './components/Specific_data';
 
 const Hello = () => {
+  //Spipe is going to be the data of the selected pipe
+  //the SelectedModel will be this pipe's index for the
+  //selection
   const [kf, setkf] = useState<number>(0);
   const [Dripper, setDripper] = useState<Array<object>>();
   const [DripperData, setDripperData] = useState<any>();
@@ -18,6 +21,7 @@ const Hello = () => {
   const [Pipes, setPipes] = useState<Array<object>>();
   const [PipesSelect, setPipesSelect] = useState<JSX.Element[]>();
   const [SPipe, setSPipe] = useState<any>();
+  const [SelectedModel, setSelectedModel] = useState<any>();
   const [Length, setLength] = useState<number>(0);
   const [Slope, setSlope] = useState(0);
   const [SP, setSP] = useState(0.15);
@@ -37,23 +41,6 @@ const Hello = () => {
     const rangeValue = event.target.value;
     setSP(rangeValue);
   };
-  //when the user chooses the dripper and the pipe
-  //this functions get's the kd
-  useEffect(() => {
-    if (SDripper !== undefined && SPipe.Models !== undefined) {
-      axios
-        .get(
-          `http://localhost:3000/Get_Kd_DripperId_PipeModel?Dripper_id=${SDripper}&Model=${SPipe.Models}`
-        )
-        .then((res) => {
-          console.log(res.data.data[0]);
-          setKD(res.data.data[0].kd);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [SPipe]);
 
   //these function get the necsecery information from the database
   useEffect(() => {
@@ -95,17 +82,16 @@ const Hello = () => {
     console.log(Pipes);
     if (Pipes !== undefined && Pipes.length > 0) {
       let count = -1;
-      console.log(Pipes);
       let a = Pipes.map((data: any) => {
-        console.log(data.Models);
         count++;
         return (
           <option
             key={count}
-            value={data}
+            value={data.Models}
             onChange={() => {
-              console.log(data.Models);
-              setSPipe(data.Models);
+              console.log(data);
+              setSelectedModel(data.Models);
+              setSPipe(data);
             }}
           >
             {data.Models}
@@ -150,6 +136,27 @@ const Hello = () => {
     }
   }, [ResultsQ, ResultsDp]);
 
+  //when the user chooses the dripper and the pipe
+  //this functions get's the kd
+  useEffect(() => {
+    if (SPipe !== undefined && SDripper !== undefined) {
+      console.log('Well?');
+      console.log(SDripper, SPipe.Models);
+      axios
+        .get(
+          `http://localhost:3000/Get_Kd_DripperId_PipeModel?Dripper_id=${SDripper}&Model=${SPipe.Models}`
+        )
+        .then((res) => {
+          console.log(res.data);
+          setKD(res.data.data[0].kd);
+          console.log(kd);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  });
+
   const Calculate = (event: any) => {
     if (kf === undefined) {
       setkf(0);
@@ -178,6 +185,7 @@ const Hello = () => {
         Qd = k * Math.pow(Pc, x);
       }
       Q1 += Qd;
+      console.log(Pd(Q1, Dlat, kd), Q1, Dlat, kd);
       Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, kd) + Ps(Slope, sp); // Am I doing the pressure right?
     }
     setResultsQ(Q1);
@@ -228,9 +236,9 @@ const Hello = () => {
           <select
             name="Pipe"
             id="Pipe"
-            value={SPipe}
+            value={SelectedModel}
             onChange={(event) => {
-              setSPipe(Number(event.target.value));
+              setSelectedModel(event.target.value);
             }}
           >
             {PipesSelect}

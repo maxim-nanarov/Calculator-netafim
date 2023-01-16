@@ -33,7 +33,7 @@ export default function Specific_data(prop: any) {
 
   const handleChange = (data: any) => {
     console.log(data);
-    console.log(prop.onDataChange(data));
+    prop.onDataChange(data);
   };
 
   useEffect(() => {
