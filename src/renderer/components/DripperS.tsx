@@ -28,7 +28,6 @@ export default function DripperS() {
   //Display
   useEffect(() => {
     let count = -1;
-    console.log(DripperData);
     if (DripperData !== undefined) {
       let a = DripperData.map((data: any) => {
         count++;
@@ -46,7 +45,6 @@ export default function DripperS() {
             <th>
               <Button
                 onClick={() => {
-                  console.log(data.Data_id);
                   setEdit(data);
                 }}
               >
@@ -201,7 +199,6 @@ export default function DripperS() {
         data: { Edit },
       })
       .then((res) => {
-        console.log(res);
         setEdit(-1);
         let num: number = Updater;
         num = num + 1;
@@ -229,14 +226,12 @@ export default function DripperS() {
     e.preventDefault();
     let formData: any = new FormData(e.target);
     formData = Object.fromEntries(formData);
-    console.log(formData);
     axios
       .post('http://localhost:3000/Insert_Into_Dripper_Data', {
         data: { formData },
       })
       .then((res) => {
         console.log(res);
-        console.log('Worked!');
       })
       .catch((err) => {
         console.log(err);

@@ -105,13 +105,15 @@ app.post('/Update_Dripper_Pipes', (req, res) => {
   const id = req.body.id;
   const Dripper_id = req.body.Dripper_id;
   const Pipe_Model = req.body.Pipe_Model;
+  const kd = req.body.kd;
 
-  let sql = `UPDATE DRIPPER_PIPES SET Dripper_id=${Dripper_id}, Pipe_Model=${Pipe_Model} WHERE id = ${id}`;
+  let sql = `UPDATE DRIPPER_PIPES SET Dripper_id=${Dripper_id}, Pipe_Model=${Pipe_Model}, kd=${kd} WHERE id = ${id}`;
   db.all(sql, (err, rows) => {
     if (err) {
       res.send({ success: false, error: err.message });
+    } else {
+      res.send({ success: true, data: rows });
     }
-    res.send({ success: true, data: rows });
   });
 });
 
@@ -119,6 +121,7 @@ app.post('/Insert_Into_Dripper_Pipes', (req, res) => {
   console.log(req.body);
   const Dripper_Id = req.body.Dripper_Id;
   const Pipe_Model = req.body.Pipe_Model;
+  const kd = req.body.kd;
   console.log(Dripper_Id, Pipe_Model);
   let id = 0;
   db.all(
@@ -160,7 +163,7 @@ app.post('/Update_Drippers_Data', (req, res) => {
   console.log(req.body);
   const data = req.body.data.Edit;
 
-  let sql = `UPDATE Drippers_Data SET Dripper_Id=${data.Dripper_id}, flow_rate=${data.flow_rate}, k=${data.k}, Pressure=${data.Pressure}, Exponent=${data.Exponent} WHERE Data_id = ${data.Data_id}`;
+  let sql = `UPDATE Drippers_Data SET Dripper_Id=${data.Dripper_id}, flow_rate=${data.flow_rate}, kd=${data.k}, Pressure=${data.Pressure}, Exponent=${data.Exponent} WHERE Data_id = ${data.Data_id}`;
   db.all(sql, (err, rows) => {
     if (err) {
       res.send({ success: false, error: err.message });
@@ -213,7 +216,7 @@ app.post('/Insert_Into_Pipes', (req, res) => {
   console.log(req.body.data.formData);
   let data = req.body.data.formData;
   console.log('does it even enter?');
-  let sql = `INSERT INTO PIPES (Models,Diameter,Pressure,kd) VALUES(${data.Model},${data.Diameter},${data.Pressure},${data.kd});`;
+  let sql = `INSERT INTO PIPES (Models,Diameter,Pressure) VALUES(${data.Model},${data.Diameter},${data.Pressure});`;
   db.all(sql, (err, rows) => {
     if (err) {
       res.send({ success: false, error: err.message });
@@ -240,7 +243,7 @@ app.post('/Delete_From_Pipes', (req, res) => {
 app.post('/Update_Pipes', (req, res) => {
   let data = req.body.Edited;
   console.log(data);
-  let sql = `UPDATE PIPES SET  DIAMETER=${data.Diameter}, Pressure=${data.Pressure},kd=${data.kd} WHERE Models=${data.Models};`;
+  let sql = `UPDATE PIPES SET  DIAMETER=${data.Diameter}, Pressure=${data.Pressure} WHERE Models=${data.Models};`;
   db.all(sql, (err, rows) => {
     if (err) {
       res.send({ success: false, error: err.message });

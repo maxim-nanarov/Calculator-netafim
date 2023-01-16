@@ -48,6 +48,7 @@ export default function Dripper_Pipe() {
             <th>{data.id}</th>
             <th>{data.Dripper_id}</th>
             <th>{data.Pipe_Model}</th>
+            <th>{data.kd}</th>
             <th>
               <Button
                 onClick={() => {
@@ -89,6 +90,12 @@ export default function Dripper_Pipe() {
                 id="Pipe_Model"
                 name="Pipe_Model"
               ></input>
+              <input
+                placeholder="kd of the pipe and drippers"
+                id="kd"
+                name="kd"
+              ></input>
+
               <div>
                 <Button
                   onClick={() => {
@@ -131,6 +138,15 @@ export default function Dripper_Pipe() {
             placeholder={Edit.Pipe_Model}
             onChange={(e) => {
               helper.Pipe_Model = e.target.value;
+            }}
+          ></input>
+        </th>
+        <th>
+          <input
+            defaultValue={Edit.kd}
+            placeholder={Edit.kd}
+            onChange={(e) => {
+              helper.kd = e.target.value;
             }}
           ></input>
         </th>
@@ -181,6 +197,7 @@ export default function Dripper_Pipe() {
         id: Edit.id,
         Dripper_id: Edit.Dripper_id,
         Pipe_Model: Edit.Pipe_Model,
+        kd: Edit.kd,
       })
       .then((res) => {
         setEdit(-1);
@@ -201,6 +218,7 @@ export default function Dripper_Pipe() {
       .post('http://localhost:3000/Insert_Into_Dripper_Pipes', {
         Dripper_Id: formData.Dripper_Id,
         Pipe_Model: formData.Pipe_Model,
+        kd: formData.kd,
       })
       .then((res) => {
         console.log(res);
@@ -221,6 +239,7 @@ export default function Dripper_Pipe() {
             <th>id</th>
             <th>Dripper Id</th>
             <th>Pipe Model</th>
+            <th>kd</th>
             <th>Edit</th>
             <th>
               <Button

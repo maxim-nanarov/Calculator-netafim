@@ -59,7 +59,6 @@ function Pipes_Table() {
             <th>{row.Models}</th>
             <th>{row.Diameter}</th>
             <th>{row.Pressure}</th>
-            <th>{row.kd}</th>
             <th>
               <Button
                 onClick={() => {
@@ -95,7 +94,6 @@ function Pipes_Table() {
             <input placeholder="Model" name="Model" id="Model"></input>
             <input placeholder="Diameter" name="Diameter" id="Diameter"></input>
             <input placeholder="Pressure" name="Pressure" id="Pressure"></input>
-            <input placeholder="Coefficency" name="kd" id="kd"></input>
             <Button form="AddForm" type="submit" value="Submit">
               INSERT
             </Button>
@@ -135,15 +133,7 @@ function Pipes_Table() {
               }}
             ></input>
           </th>
-          <th>
-            <input
-              placeholder="Coefficent"
-              defaultValue={helper.kd}
-              onChange={(e) => {
-                helper.kd = e.target.value;
-              }}
-            ></input>
-          </th>
+
           <th>
             <Button
               onClick={() => {
@@ -224,7 +214,6 @@ function Pipes_Table() {
             <th>Model</th>
             <th>Diameter</th>
             <th>Pressure</th>
-            <th>Coefficency</th>
             <th></th>
             <th>
               <Button
