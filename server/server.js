@@ -85,7 +85,6 @@ app.get('/DData', (req, res, next) => {
 });
 //more complicated request that is made for the select
 //calculator:
-
 app.get('/Get_Relevent_Pipes', (req, res) => {
   const id = req.query.id;
   let sql = `Select * from Pipes Where Models IN (Select Pipe_Model from Dripper_Pipes Where Dripper_id = ${id});`;
@@ -95,6 +94,19 @@ app.get('/Get_Relevent_Pipes', (req, res) => {
       res.send({ success: false, error: err.message });
     } else {
       console.log(rows);
+      res.send({ success: true, data: rows });
+    }
+  });
+});
+//gets specifed data for the select page so the user
+//will select the data he wants to use
+app.get('/Get_Specified_Data', (req, res) => {
+  const id = req.query.id;
+  let sql = `SELECT * FROM Drippers_Data Where Dripper_id = ${req.query.id};`;
+  db.all(sql, (err, rows) => {
+    if (err) {
+      res.send({ success: false, error: err.message });
+    } else {
       res.send({ success: true, data: rows });
     }
   });
@@ -163,12 +175,14 @@ app.post('/Update_Drippers_Data', (req, res) => {
   console.log(req.body);
   const data = req.body.data.Edit;
 
-  let sql = `UPDATE Drippers_Data SET Dripper_Id=${data.Dripper_id}, flow_rate=${data.flow_rate}, kd=${data.k}, Pressure=${data.Pressure}, Exponent=${data.Exponent} WHERE Data_id = ${data.Data_id}`;
+  let sql = `UPDATE Drippers_Data SET Dripper_Id=${data.Dripper_id}, flow_rate=${data.flow_rate}, k=${data.k}, Pressure=${data.Pressure}, Exponent=${data.Exponent} WHERE Data_id = ${data.Data_id}`;
   db.all(sql, (err, rows) => {
+    console.log(err);
     if (err) {
       res.send({ success: false, error: err.message });
+    } else {
+      res.send({ success: true, data: rows });
     }
-    res.send({ success: true, data: rows });
   });
 });
 

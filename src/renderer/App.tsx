@@ -55,6 +55,7 @@ const Hello = () => {
         console.log(err);
       });
   }, []);
+  //gets the relevent dripper data for the user to choose:
   //get's the specifc pipes for the chosen dripper
   useEffect(() => {
     if (SDripper !== undefined) {
@@ -65,6 +66,16 @@ const Hello = () => {
           console.log(res.data.data);
           setPipes(res.data.data);
           setSPipe(res.data.data[0]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      axios
+        .get(`http://localhost:3000/Get_Specified_Data?id=${SDripper}`)
+        .then((res) => {
+          console.log('Gets specified data');
+          console.log(res.data.data);
         })
         .catch((err) => {
           console.log(err);

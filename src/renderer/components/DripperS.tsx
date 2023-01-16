@@ -24,6 +24,18 @@ export default function DripperS() {
       .catch((err) => {
         console.log(err);
       });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3000/DData')
+      .then((res) => {
+        setDripperData(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [Updater]);
   //Display
   useEffect(() => {
@@ -38,9 +50,9 @@ export default function DripperS() {
           <tr key={count}>
             <th>{data.Data_id}</th>
             <th>{data.Dripper_id}</th>
+            <th>{data.flow_rate}</th>
             <th>{data.Exponent}</th>
             <th>{data.Pressure}</th>
-            <th>{data.flow_rate}</th>
             <th>{data.k}</th>
             <th>
               <Button
@@ -54,6 +66,7 @@ export default function DripperS() {
             <th>
               <Button
                 onClick={() => {
+                  console.log(data.Data_id);
                   setDelete(data.Data_id);
                   Delete();
                 }}
@@ -68,7 +81,7 @@ export default function DripperS() {
       }
       setDripper_Data_Display(a);
     }
-  }, [DripperData, EditDisplay, isAdding]);
+  }, [DripperData, EditDisplay, isAdding, Updater]);
 
   useEffect(() => {
     if (isAdding) {
@@ -210,11 +223,15 @@ export default function DripperS() {
   }
 
   function Delete() {
+    console.log(DeleteIndex);
     axios
       .post('http://localhost:3000/Delete_From_Dripper_Data', {
         id: DeleteIndex,
       })
       .then((res) => {
+        let num = Updater;
+        num = num + 1;
+        setUpdater(num);
         console.log(res);
       })
       .catch((err) => {
@@ -231,6 +248,9 @@ export default function DripperS() {
         data: { formData },
       })
       .then((res) => {
+        let num = Updater;
+        num = num + 1;
+        setUpdater(num);
         console.log(res);
       })
       .catch((err) => {
@@ -246,10 +266,10 @@ export default function DripperS() {
           <tr>
             <th>Data Id</th>
             <th>dripper id</th>
-            <th>flow rate</th>
-            <th>Exponent</th>
-            <th>Pressure</th>
-            <th>Coefficent</th>
+            <th>flow rate (Q L/H)</th>
+            <th>Exponent (X)</th>
+            <th>Pressure (Meter) </th>
+            <th>Coefficency (K)</th>
             <th></th>
             <th>
               <Button

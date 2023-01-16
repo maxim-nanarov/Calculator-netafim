@@ -212,8 +212,8 @@ function Pipes_Table() {
         <thead>
           <tr>
             <th>Model</th>
-            <th>Diameter</th>
-            <th>Pressure</th>
+            <th>Diameter (mm^2)</th>
+            <th>Pressure (Meter)</th>
             <th></th>
             <th>
               <Button
