@@ -214,6 +214,7 @@ export default function Dripper_Pipe() {
     e.preventDefault();
     let formData: any = new FormData(e.target);
     formData = Object.fromEntries(formData);
+    console.log(formData.kd);
     axios
       .post('http://localhost:3000/Insert_Into_Dripper_Pipes', {
         Dripper_Id: formData.Dripper_Id,

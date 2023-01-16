@@ -145,7 +145,7 @@ app.post('/Insert_Into_Dripper_Pipes', (req, res) => {
         console.log(row[0].id + 1);
         id = row[0].id + 1;
         console.log('id: ' + id);
-        let sql = `INSERT INTO DRIPPER_PIPES (id,Dripper_id, Pipe_Model) VALUES (${id},${Dripper_Id},${Pipe_Model})`;
+        let sql = `INSERT INTO DRIPPER_PIPES (id,Dripper_id, Pipe_Model,kd) VALUES (${id},${Dripper_Id},${Pipe_Model},${kd})`;
         db.all(sql, (err, rows) => {
           if (err) {
             res.send({ success: false, error: err.message });

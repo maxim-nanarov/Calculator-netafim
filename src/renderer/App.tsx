@@ -5,6 +5,7 @@ import Input from './Input';
 import Data from './data';
 import { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
+import Specific_data from './components/Specific_data';
 
 const Hello = () => {
   const [kf, setkf] = useState<number>();
@@ -13,6 +14,7 @@ const Hello = () => {
   const [ResultsQ, setResultsQ] = useState<Number>();
   const [DripperSelect, setDripperSelect] = useState<JSX.Element[]>();
   const [SDripper, setSDripper] = useState<number>();
+  const [SDripperDisplay, setSDripperDisplay] = useState<any>();
   const [Pipes, setPipes] = useState<Array<object>>();
   const [PipesSelect, setPipesSelect] = useState<JSX.Element[]>();
   const [SPipe, setSPipe] = useState<any>();
@@ -70,16 +72,7 @@ const Hello = () => {
         .catch((err) => {
           console.log(err);
         });
-
-      axios
-        .get(`http://localhost:3000/Get_Specified_Data?id=${SDripper}`)
-        .then((res) => {
-          console.log('Gets specified data');
-          console.log(res.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      setSDripperDisplay(<Specific_data id={SDripper}></Specific_data>);
     }
   }, [SDripper]);
   //takes the pipes table and display it in the select menu
@@ -212,6 +205,7 @@ const Hello = () => {
           >
             {DripperSelect}
           </select>
+          {SDripperDisplay}
           <select
             name="Pipe"
             id="Pipe"
