@@ -120,7 +120,7 @@ app.get('/Get_Kd_DripperId_PipeModel', (req, res) => {
   sql = `SELECT kd FROM DRIPPER_PIPES where Dripper_id = ${id} AND Pipe_Model = ${model}`;
   db.all(sql, (err, rows) => {
     if (err) {
-      res.send({ success: false, error: err.message });
+      res.send({ success: false, error: err });
     } else {
       res.send({ success: true, data: rows });
     }

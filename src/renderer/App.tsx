@@ -37,6 +37,23 @@ const Hello = () => {
     const rangeValue = event.target.value;
     setSP(rangeValue);
   };
+  //when the user chooses the dripper and the pipe
+  //this functions get's the kd
+  useEffect(() => {
+    if (SDripper !== undefined && SPipe.Models !== undefined) {
+      axios
+        .get(
+          `http://localhost:3000/Get_Kd_DripperId_PipeModel?Dripper_id=${SDripper}&Model=${SPipe.Models}`
+        )
+        .then((res) => {
+          console.log(res.data.data[0]);
+          setKD(res.data.data[0].kd);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [SPipe]);
 
   //these function get the necsecery information from the database
   useEffect(() => {
@@ -51,26 +68,6 @@ const Hello = () => {
       });
   }, []);
 
-  //when the user chooses the dripper and the pipe
-  //this functions get's the kd
-  useEffect(() => {
-    if (SDripper !== undefined && SPipe !== undefined) {
-      console.log('Starting the search for the kd');
-      console.log(SDripper, SPipe.Models);
-      axios
-        .get(
-          `http://localhost:3000/Get_Kd_DripperId_PipeModel?Dripper_id=${SDripper}&Model=${SPipe.Models}`
-        )
-        .then((res) => {
-          console.log(res.data.data[0].kd);
-          setKD(res.data.data[0].kd);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [SDripper, SPipe]);
-
   //gets the relevent dripper data for the user to choose:
   //get's the specifc pipes for the chosen dripper
   useEffect(() => {
@@ -78,8 +75,6 @@ const Hello = () => {
       axios
         .get(`http://localhost:3000/Get_Relevent_Pipes?id=${SDripper}`)
         .then((res) => {
-          console.log(SDripper);
-          console.log(res.data.data);
           setPipes(res.data.data);
           setSPipe(res.data.data[0]);
         })
@@ -97,16 +92,20 @@ const Hello = () => {
   //takes the pipes table and display it in the select menu
   //according to the dripper selection
   useEffect(() => {
+    console.log(Pipes);
     if (Pipes !== undefined && Pipes.length > 0) {
       let count = -1;
+      console.log(Pipes);
       let a = Pipes.map((data: any) => {
+        console.log(data.Models);
         count++;
         return (
           <option
             key={count}
             value={data}
-            onChange={(event) => {
-              setSPipe(data);
+            onChange={() => {
+              console.log(data.Models);
+              setSPipe(data.Models);
             }}
           >
             {data.Models}
@@ -157,7 +156,6 @@ const Hello = () => {
     }
 
     let sp = SP;
-    let kd = SPipe.kd;
     let k = DripperData.k; //V
     let x = DripperData.Exponent; //V
     let Pc = DripperData.Pressure; //V
@@ -203,8 +201,6 @@ const Hello = () => {
   };
 
   const getChildData = (dataFromChild: any) => {
-    console.log('This is the parent component');
-    console.log(dataFromChild);
     setDripperData(dataFromChild);
   };
 
