@@ -64,6 +64,7 @@ const Hello = () => {
         .then((res) => {
           setPipes(res.data.data);
           setSPipe(res.data.data[0]);
+          setSelectedModel(res.data.data[0].Models);
         })
         .catch((err) => {
           console.log(err);
@@ -89,7 +90,6 @@ const Hello = () => {
             key={count}
             value={data.Models}
             onChange={() => {
-              console.log(data);
               setSelectedModel(data.Models);
               setSPipe(data);
             }}
@@ -124,7 +124,7 @@ const Hello = () => {
       setDripperSelect(Helper);
     }
   }, [Dripper]);
-
+  //the result "component"
   useEffect(() => {
     if (ResultsQ !== undefined) {
       setA(
@@ -140,28 +140,25 @@ const Hello = () => {
   //this functions get's the kd
   useEffect(() => {
     if (SPipe !== undefined && SDripper !== undefined) {
-      console.log('Well?');
-      console.log(SDripper, SPipe.Models);
       axios
         .get(
-          `http://localhost:3000/Get_Kd_DripperId_PipeModel?Dripper_id=${SDripper}&Model=${SPipe.Models}`
+          `http://localhost:3000/Get_Kd_DripperId_PipeModel?Dripper_id=${SDripper}&Model=${SelectedModel}`
         )
         .then((res) => {
-          console.log(res.data);
           setKD(res.data.data[0].kd);
-          console.log(kd);
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  });
+  }, [SDripper, SPipe, SelectedModel]);
 
+  //the calculation function
   const Calculate = (event: any) => {
     if (kf === undefined) {
       setkf(0);
     }
-
+    console.log('Kd: ' + kd);
     let sp = SP;
     let k = DripperData.k; //V
     let x = DripperData.Exponent; //V
@@ -185,7 +182,7 @@ const Hello = () => {
         Qd = k * Math.pow(Pc, x);
       }
       Q1 += Qd;
-      console.log(Pd(Q1, Dlat, kd), Q1, Dlat, kd);
+      console.log(Q1);
       Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, kd) + Ps(Slope, sp); // Am I doing the pressure right?
     }
     setResultsQ(Q1);
@@ -238,6 +235,7 @@ const Hello = () => {
             id="Pipe"
             value={SelectedModel}
             onChange={(event) => {
+              console.log(event.target.value);
               setSelectedModel(event.target.value);
             }}
           >
