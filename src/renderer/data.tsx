@@ -48,10 +48,14 @@ export default function Data() {
         <Link to={'/Data'}>Data</Link>
       </nav>
       <div className="Table-Container">
-        <Dripper_Table></Dripper_Table>
-        <Pipes_Table></Pipes_Table>
-        <DripperS></DripperS>
-        <Dripper_Pipe></Dripper_Pipe>
+        <div className="Table-Container-two">
+          <Dripper_Table></Dripper_Table>
+          <Pipes_Table></Pipes_Table>
+        </div>
+        <div className="Table-Container-two">
+          <DripperS></DripperS>
+          <Dripper_Pipe></Dripper_Pipe>
+        </div>
       </div>
     </div>
   );
