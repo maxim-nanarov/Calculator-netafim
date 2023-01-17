@@ -8,6 +8,7 @@ function Calculate(k, kd, kf, x, Dlat, Dp, pc, Length, sp, Slope) {
   console.log('pc: ' + pc);
   console.log('Length: ' + Length);
   console.log('sp: ' + sp);
+  Slope = Slope / 100;
   console.log('Slope: ' + Slope);
   let Q1;
   if (Dp < pc) {
@@ -52,4 +53,4 @@ console.log('and 16009 pipe');
 
 //the functions is taking the parameters in this order:
 // Calculate(k,kd ,kf, x, Dlat, Dp, pc, Length, sp, Slope
-Calculate(0.1, 1.3, 0, 0.5, 14.2, 3.5, 5, 10, 0.5, 5);
+Calculate(0.1, 1.3, 0, 0.5, 14.2, 5, 5, 10, 0.5, 5);
