@@ -12,6 +12,7 @@ export default function Dripper_Pipe() {
   const [IsAdding, setIsAdding] = useState<boolean>(false);
   const [AddingDisplay, setAddingDisplay] = useState<any>();
   const [Updater, setUpdater] = useState<number>(0);
+  const [changer, setChanger] = useState<boolean>(false);
   let a: any;
 
   useEffect(() => {
@@ -115,7 +116,7 @@ export default function Dripper_Pipe() {
       }
       setDripper_Pipe_Display(a);
     }
-  }, [Dripper_Pipes, EditDisplay, DeleteIndex, IsAdding]);
+  }, [Dripper_Pipes, EditDisplay, DeleteIndex, IsAdding, Updater, changer]);
   //Edit
   useEffect(() => {
     if (Edit === undefined) return undefined;
@@ -226,6 +227,7 @@ export default function Dripper_Pipe() {
         let num = Updater;
         num = num + 1;
         setUpdater(num);
+        setChanger(!changer);
       })
       .catch((err) => {
         console.log(err);

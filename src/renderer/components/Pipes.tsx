@@ -167,7 +167,7 @@ function Pipes_Table() {
       .post('http://localhost:3000/Insert_Into_Pipes', { data: { formData } })
       .then((res) => {
         console.log(res);
-        setIsAdding(!isAdding);
+        // setIsAdding(!isAdding);
         let num = Updater;
         num = num + 1;
         setUpdater(num);

@@ -129,7 +129,7 @@ export default function DripperS() {
     } else {
       setAddingDisplay(<></>);
     }
-  }, [isAdding]);
+  }, [isAdding, Updater]);
 
   useEffect(() => {
     if (Edit === undefined) return undefined;
