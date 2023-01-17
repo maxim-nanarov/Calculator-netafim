@@ -49,7 +49,7 @@ app.get('/Drippers', (req, res, next) => {
 });
 
 app.get('/Pipes', (req, res, next) => {
-  const SPipes = 'SELECT * FROM Pipes;';
+  const SPipes = 'SELECT * FROM Pipes ORDER BY Models;';
   db.all(SPipes, (err, rows) => {
     if (err) {
       console.error(err.message);

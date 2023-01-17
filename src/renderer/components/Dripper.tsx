@@ -195,6 +195,7 @@ export default function Dripper_Table() {
       .then((res) => {
         console.log('Success! ');
         console.log(res);
+        setEdit(-1);
       })
       .catch((err) => {
         console.log(err);
