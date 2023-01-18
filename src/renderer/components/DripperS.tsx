@@ -12,12 +12,22 @@ export default function DripperS() {
   const [AddingDisplay, setAddingDisplay] = useState<any>();
   const [EditDisplay, setEditDisplay] = useState<any>();
   const [Updater, setUpdater] = useState<number>(0);
+  //from here this is the pagination states
+  const [paginationCounter, setPaginationCounter] = useState<number>(0);
+  const [paginationDisplay, setPaginationDisplay] = useState<
+    Array<JSX.Element[]>
+  >([]);
+  const [paginationDisplayFilterd, setPaginationDisplayFilterd] = useState<
+    Array<JSX.Element[]>
+  >([]);
+  const [paginationIndex, setPaginationIndex] = useState<number>(0);
   let a: any;
 
   useEffect(() => {
     axios
       .get('http://localhost:3000/DData')
       .then((res) => {
+        setPaginationCounter(res.data.data.length);
         setDripperData(res.data.data);
         console.log(res.data.data);
       })
@@ -25,6 +35,36 @@ export default function DripperS() {
         console.log(err);
       });
   }, []);
+  //the paginations life cycle
+  useEffect(() => {
+    let a: any = [];
+    console.log(paginationCounter / 10);
+    for (let i = 0; i <= Math.ceil(paginationCounter / 10); i++) {
+      a.push(
+        <li className="page-item">
+          <a
+            className="page-link"
+            onClick={() => {
+              setPaginationIndex(i);
+            }}
+          >
+            {i}
+          </a>
+        </li>
+      );
+    }
+    setPaginationDisplay(a);
+  }, [paginationCounter]);
+  useEffect(() => {
+    let a = paginationDisplay.map((data: any, Index: number) => {
+      if (paginationIndex - 2 > Index || paginationIndex + 2 < Index) {
+        return <></>;
+      } else {
+        return data;
+      }
+    });
+    setPaginationDisplayFilterd(a);
+  }, [paginationIndex, paginationDisplay]);
 
   useEffect(() => {
     axios
@@ -41,10 +81,14 @@ export default function DripperS() {
   useEffect(() => {
     let count = -1;
     if (DripperData !== undefined) {
-      let a = DripperData.map((data: any) => {
+      let a = DripperData.map((data: any, Index: number) => {
         count++;
         if (EditDisplay !== undefined && Edit.Data_id === data.Data_id)
           return EditDisplay;
+        console.log(paginationIndex);
+        if (Math.ceil(Index / 10) !== paginationIndex) {
+          return <></>;
+        }
 
         return (
           <tr key={count}>
@@ -81,7 +125,7 @@ export default function DripperS() {
       }
       setDripper_Data_Display(a);
     }
-  }, [DripperData, EditDisplay, isAdding, Updater]);
+  }, [DripperData, EditDisplay, isAdding, Updater, paginationIndex]);
 
   useEffect(() => {
     if (isAdding) {
@@ -285,6 +329,31 @@ export default function DripperS() {
         <tbody>{Dripper_Data_Display}</tbody>
       </Table>
       {AddingDisplay}
+      <nav aria-label="Page navigation">
+        <ul className="pagination justify-content-center">
+          <li className="page-item">
+            <a
+              className="page-link"
+              onClick={() => {
+                setPaginationIndex(0);
+              }}
+            >
+              Previous
+            </a>
+          </li>
+          {paginationDisplayFilterd}
+          <li className="page-item">
+            <a
+              className="page-link"
+              onClick={() => {
+                setPaginationIndex(Math.ceil(paginationCounter / 10));
+              }}
+            >
+              Next
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }
