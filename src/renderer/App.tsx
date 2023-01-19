@@ -219,7 +219,7 @@ const Hello = () => {
   };
 
   return (
-    <div>
+    <div className="MainContainer">
       <nav>
         <Link to={'/'}>Select</Link>
         <Link to={'/Input'}>Input</Link>

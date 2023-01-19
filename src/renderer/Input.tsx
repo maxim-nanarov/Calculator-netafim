@@ -92,7 +92,7 @@ export default function Input() {
   };
 
   return (
-    <>
+    <div className="MainContainer">
       <nav>
         <Link to={'/'}>Select</Link>
         <Link to={'/Input'}>Input</Link>
@@ -142,6 +142,6 @@ export default function Input() {
         </form>
         {a}
       </div>
-    </>
+    </div>
   );
 }
