@@ -18,7 +18,10 @@ function FindLength(GivenDp, GivenQ, k, kd, kf, x, Dlat, Dp, pc, sp, Slope) {
   }
   let Qd = 0;
   console.log('Given Q and Dp: ' + GivenQ, GivenDp);
+  let counter = 0;
   while (Q1 < GivenQ && Dp < GivenDp) {
+    counter++;
+    console.log(Dp);
     if (Dp < pc) {
       Qd = k * Math.pow(Dp, x);
     } else {
@@ -30,7 +33,7 @@ function FindLength(GivenDp, GivenQ, k, kd, kf, x, Dlat, Dp, pc, sp, Slope) {
   }
   console.log('Q1: ' + Q1);
   console.log('Dp: ' + Dp);
-  console.log(length);
+  console.log('Length: ' + length);
   //the tube with the drippers
 }
 function Phw(Qlat, Dlat, sp) {
@@ -48,5 +51,9 @@ function Pd(Qlat, Dlat, kd) {
 function Ps(Slope, Length) {
   return Slope * Length;
 }
-
-FindLength(14, 3, 0.1, 1.3, 0, 0.5, 14.2, 5, 5, 0.5, 5);
+//in this function the given Dp and the Given Q
+//are Ultimetly the stoping condition for finding out what kind
+//of pressure and flow that the client can give, and in return
+//we give him the length of the pipe.
+//GivenDp, GivenQ, k, kd, kf, x, Dlat, Dp, pc, sp, Slope
+FindLength(6, 1, 0.7, 1.3, 0, 0, 14.2, 5, 5, 0.15, 5);

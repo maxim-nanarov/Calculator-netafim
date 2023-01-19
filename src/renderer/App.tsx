@@ -158,6 +158,12 @@ const Hello = () => {
     if (kf === undefined) {
       setkf(0);
     }
+
+    if (kd === undefined || DripperData === undefined) {
+      alert('Please choose the dripper and the pipe');
+      return 'error';
+    }
+
     console.log('Kd: ' + kd);
     let sp = SP;
     let k = DripperData.k; //V
@@ -167,6 +173,7 @@ const Hello = () => {
     Dlat = SPipe.Diameter;
     let Q1 = 0;
     let Dp = dp;
+
     if (Dp < Pc) {
       Q1 = kf * Math.pow(Dp, 0.5);
     } else {
@@ -182,8 +189,9 @@ const Hello = () => {
         Qd = k * Math.pow(Pc, x);
       }
       Q1 += Qd;
+      console.log(Dp, Pc);
       console.log(Q1);
-      Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, kd) + Ps(Slope, sp); // Am I doing the pressure right?
+      Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, kd) + Ps(Slope / 100, sp); // Am I doing the pressure right?
     }
     setResultsQ(Q1);
     setResultsDp(Dp);
@@ -197,6 +205,7 @@ const Hello = () => {
     function Pd(Qlat: number, Dlat: number, kd: number) {
       let Q = Math.pow(Qlat, 2);
       let D = Math.pow(Dlat, -4);
+      console.log(6.367 * Math.pow(10, -3) * Q * D * kd);
       return 6.367 * Math.pow(10, -3) * Q * D * kd;
     }
     //slope and length
