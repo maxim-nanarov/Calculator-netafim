@@ -43,7 +43,7 @@
     "prepare": "husky install",
     "rebuild": "electron-rebuild --parallel --types prod,dev,optional --module-dir release/app ",
     "start": "ts-node ./.erb/scripts/check-port-in-use.js && npm run start:renderer & npm run start:server",
-    "start:server": "cd ./server && npm start",
+    "start:server": "cd ./src/server && npm start",
     "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
@@ -119,8 +119,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.4.0",
-    "sqlite3": "^5.1.4"
+    "react-router-dom": "^6.4.0"
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
