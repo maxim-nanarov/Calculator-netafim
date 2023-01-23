@@ -141,17 +141,21 @@ import sqlite3 from 'sqlite3';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 const App = express();
-
-const db = new sqlite3.Database(
-  'linux-unpacked/resources/test.db',
-  (err: any) => {
-    if (err) {
-      console.error(err.message);
-    } else {
-      console.log('Connected to the database.');
-    }
+//suppose to be the window directory to the data base:
+//let Path = path.join('win-unpacked', 'resources', 'test.db');
+//
+//suppose to be the Linux directory to the data base:
+//let Path = path.join('lin-unpacked', 'resources', 'test.db');
+//
+//this is the localy directory of the database:
+//assets/DB/test.db
+const db = new sqlite3.Database('assets/DB/test.db', (err: any) => {
+  if (err) {
+    console.error(err.message);
+  } else {
+    console.log('Connected to the database. motha fuka ');
   }
-);
+});
 
 App.use(
   cors({
