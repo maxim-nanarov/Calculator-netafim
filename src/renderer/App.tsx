@@ -6,6 +6,7 @@ import Data from './data';
 import { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import Specific_data from './components/Specific_data';
+import path from 'path';
 
 const Hello = () => {
   //Spipe is going to be the data of the selected pipe
