@@ -142,18 +142,21 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 const App = express();
 //suppose to be the window directory to the data base:
-//let Path = path.join('win-unpacked', 'resources', 'test.db');
+// let Path = path.join('win-unpacked', 'resources', 'test');
 //
 //suppose to be the Linux directory to the data base:
-//let Path = path.join('lin-unpacked', 'resources', 'test.db');
+// let Path = path.join('linux-unpacked', 'resources', 'test.db');
 //
 //this is the localy directory of the database:
+let Path = path.join('assets', 'DB', 'test.db');
 //assets/DB/test.db
-const db = new sqlite3.Database('assets/DB/test.db', (err: any) => {
+//In order to package for windows:  --win --x64
+//need to insert it to the json file in the package command
+const db = new sqlite3.Database(Path, (err: any) => {
   if (err) {
     console.error(err.message);
   } else {
-    console.log('Connected to the database. motha fuka ');
+    console.log('Connected to the database.');
   }
 });
 
