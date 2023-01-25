@@ -15,7 +15,7 @@ const Hello = () => {
   const [kf, setkf] = useState<number>(0);
   const [Dripper, setDripper] = useState<Array<object>>();
   const [DripperData, setDripperData] = useState<any>();
-  const [ResultsQ, setResultsQ] = useState<Number>();
+  const [ResultsQ, setResultsQ] = useState<number>();
   const [DripperSelect, setDripperSelect] = useState<JSX.Element[]>();
   const [SDripper, setSDripper] = useState<number>();
   const [SDripperDisplay, setSDripperDisplay] = useState<any>();
@@ -131,7 +131,7 @@ const Hello = () => {
       setA(
         <div className="Results">
           <label>Q: {ResultsQ} L/H</label>
-          <label>Dp: {ResultsDp}</label>
+          <label>Dp: {ResultsDp} Flow Rate</label>
         </div>
       );
     }
@@ -190,8 +190,6 @@ const Hello = () => {
         Qd = k * Math.pow(Pc, x);
       }
       Q1 += Qd;
-      console.log(Dp, Pc);
-      console.log(Q1);
       Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, kd) + Ps(Slope / 100, sp); // Am I doing the pressure right?
     }
     setResultsQ(Q1);

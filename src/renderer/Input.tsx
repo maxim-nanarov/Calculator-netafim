@@ -15,8 +15,8 @@ export default function Input() {
     if (ResultsQ !== undefined && ResultsDp !== undefined) {
       let a = (
         <div className="Results">
-          <label>Q: {Math.round(ResultsQ)} L/H</label>
-          <label>Dp: {Math.round(ResultsDp)}</label>
+          <label>Q: {ResultsQ} L/H</label>
+          <label>Dp: {ResultsDp}</label>
         </div>
       );
       setA(a);
@@ -66,10 +66,9 @@ export default function Input() {
       }
       Q1 += Qd;
       Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, k) + Ps(Slope, sp); // Am I doing the pressure right?
-      console.log(typeof Dp);
+      console.log(Dp);
+      console.log(Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, k) + Ps(Slope, sp));
     }
-    console.log('Q1: ' + Q1);
-    console.log('Dp: ' + Dp);
     setResultsDp(Dp);
     setResultsQ(Q1);
     //the tube with the drippers
@@ -78,7 +77,6 @@ export default function Input() {
     let Q = Math.pow(Qlat, 1.76);
     let D = Math.pow(Dlat, -4.76);
     let x = 0.4364 * Q * D * sp;
-    console.log(typeof x);
     return x;
   }
   //the tube
@@ -86,12 +84,10 @@ export default function Input() {
     let Q = Math.pow(Qlat, 2);
     let D = Math.pow(Dlat, -4);
     let x = 6.367 * Math.pow(10, -3) * Q * D * kd;
-    console.log(typeof x);
     return x;
   }
   //slope and length
   function Ps(Slope: number, Length: number): number {
-    console.log(typeof (Slope * Length));
     return Slope * Length;
   }
 
@@ -135,7 +131,13 @@ export default function Input() {
             step="any"
             placeholder="Coefficency of the dripper"
           ></input>
-          <input name="kd" type="number" id="kd" placeholder="kd"></input>
+          <input
+            name="kd"
+            step="any"
+            type="number"
+            id="kd"
+            placeholder="kd"
+          ></input>
           <input
             name="Length"
             step="any"
