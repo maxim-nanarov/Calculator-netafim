@@ -101,103 +101,108 @@ export default function Input() {
   };
 
   return (
-    <div className="MainContainer">
-      <nav>
-        <Link to={'/'}>Select</Link>
-        <Link to={'/Input'}>Input</Link>
-        <Link to={'/Data'}>Data</Link>
-      </nav>
-      <div className="Calculator">
-        <h1>Put The Data</h1>
-        <form className="Form" onSubmit={Calculate}>
-          <input
-            name="dp"
-            step="any"
-            type="number"
-            id="dp"
-            placeholder="dp"
-          ></input>
-          <input
-            name="Dlat"
-            step="any"
-            id="Dlat"
-            type="number"
-            placeholder="Dlat"
-          ></input>
-          <input
-            type="number"
-            name="k"
-            id="k"
-            step="any"
-            placeholder="Coefficency of the dripper"
-          ></input>
-          <input
-            name="kd"
-            step="any"
-            type="number"
-            id="kd"
-            placeholder="kd"
-          ></input>
-          <input
-            name="Length"
-            step="any"
-            type="number"
-            id="Length"
-            placeholder="Pipe - Length"
-          ></input>
-          <input
-            name="x"
-            step="any"
-            type="number"
-            id="x"
-            placeholder="exponent of the dripper"
-          ></input>
-          <input
-            name="kf"
-            step="any"
-            type="number"
-            id="kf"
-            placeholder="kf"
-          ></input>
-          <input
-            name="pc"
-            step="any"
-            type="number"
-            id="pc"
-            placeholder="pc"
-          ></input>
-          <div className="Range">
-            <input
-              name="Slope"
-              id="Slope"
-              placeholder="slope"
-              step={0.5}
-              max={10}
-              min={-10}
-              type="range"
-              onChange={handleRangeChange}
-            ></input>
-            <label>{Slope}%</label>
-          </div>
-
-          <div className="Range">
-            <input
-              name="sp"
-              id="sp"
-              placeholder="Space Between the Drippers"
-              step={0.05}
-              max={1}
-              min={0.15}
-              defaultValue={SP}
-              type="range"
-              onChange={handleRangeSpaceChange}
-            ></input>
-            <label>{SP}m</label>
-          </div>
-          <button type="submit">Submit</button>
-        </form>
-        {a}
+    <>
+      <div className="MainTitle">
+        <h1>Calculator</h1>
       </div>
-    </div>
+      <div className="MainContainer">
+        <nav>
+          <Link to={'/'}>Select</Link>
+          <Link to={'/Input'}>Input</Link>
+          <Link to={'/Data'}>Data</Link>
+        </nav>
+        <div className="Calculator">
+          <h1>Put The Data</h1>
+          <form className="Form" onSubmit={Calculate}>
+            <input
+              name="dp"
+              step="any"
+              type="number"
+              id="dp"
+              placeholder="dp"
+            ></input>
+            <input
+              name="Dlat"
+              step="any"
+              id="Dlat"
+              type="number"
+              placeholder="Dlat"
+            ></input>
+            <input
+              type="number"
+              name="k"
+              id="k"
+              step="any"
+              placeholder="Coefficency of the dripper"
+            ></input>
+            <input
+              name="kd"
+              step="any"
+              type="number"
+              id="kd"
+              placeholder="kd"
+            ></input>
+            <input
+              name="Length"
+              step="any"
+              type="number"
+              id="Length"
+              placeholder="Pipe - Length"
+            ></input>
+            <input
+              name="x"
+              step="any"
+              type="number"
+              id="x"
+              placeholder="exponent of the dripper"
+            ></input>
+            <input
+              name="kf"
+              step="any"
+              type="number"
+              id="kf"
+              placeholder="kf"
+            ></input>
+            <input
+              name="pc"
+              step="any"
+              type="number"
+              id="pc"
+              placeholder="pc"
+            ></input>
+            <div className="Range">
+              <input
+                name="Slope"
+                id="Slope"
+                placeholder="slope"
+                step={0.5}
+                max={10}
+                min={-10}
+                type="range"
+                onChange={handleRangeChange}
+              ></input>
+              <label>{Slope}%</label>
+            </div>
+
+            <div className="Range">
+              <input
+                name="sp"
+                id="sp"
+                placeholder="Space Between the Drippers"
+                step={0.05}
+                max={1}
+                min={0.15}
+                defaultValue={SP}
+                type="range"
+                onChange={handleRangeSpaceChange}
+              ></input>
+              <label>{SP}m</label>
+            </div>
+            <button type="submit">Submit</button>
+          </form>
+          {a}
+        </div>
+      </div>
+    </>
   );
 }

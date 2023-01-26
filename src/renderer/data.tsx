@@ -41,22 +41,27 @@ export default function Data() {
   }, []);
 
   return (
-    <div>
-      <nav>
-        <Link to={'/'}>Select</Link>
-        <Link to={'/Input'}>Input</Link>
-        <Link to={'/Data'}>Data</Link>
-      </nav>
-      <div className="Table-Container">
-        <div className="Table-Container-two">
-          <Dripper_Table></Dripper_Table>
-          <Pipes_Table></Pipes_Table>
-        </div>
-        <div className="Table-Container-two">
-          <DripperS></DripperS>
-          <Dripper_Pipe></Dripper_Pipe>
+    <>
+      <div className="MainTitle">
+        <h1>Calculator</h1>
+      </div>
+      <div>
+        <nav>
+          <Link to={'/'}>Select</Link>
+          <Link to={'/Input'}>Input</Link>
+          <Link to={'/Data'}>Data</Link>
+        </nav>
+        <div className="Table-Container">
+          <div className="Table-Container-two">
+            <Dripper_Table></Dripper_Table>
+            <Pipes_Table></Pipes_Table>
+          </div>
+          <div className="Table-Container-two">
+            <DripperS></DripperS>
+            <Dripper_Pipe></Dripper_Pipe>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

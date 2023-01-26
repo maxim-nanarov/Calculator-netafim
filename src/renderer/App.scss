@@ -9,28 +9,45 @@
   }
 }
 
+.MainTitle {
+  display: flex;
+  // justify-content: right;
+  right: 5%;
+  background-color: #4a4a87;
+  color: white;
+}
+
 nav {
+  width: 20%;
   display: flex;
   justify-content: center;
-
+  flex-direction: column;
+  background-color: rgb(133, 132, 132);
+  left: 0;
+  height: 100vh;
   Link,
   a {
+    width: 100%;
     text-decoration: none;
     color: rgb(0, 0, 0);
-    background-color: white;
-    padding: 10px 20px;
-    border-radius: 10px;
+    background-color: rgb(133, 132, 132);
     border: none;
     appearance: none;
     font-size: 1.3rem;
-    box-shadow: 0px 8px 28px -6px rgba(24, 39, 75, 0.12),
-      0px 18px 88px -4px rgba(24, 39, 75, 0.14);
-    transition: all ease-in 0.1s;
+    transition: all ease-in 0.3s;
+    cursor: pointer;
+    opacity: 0.9;
+    margin: 0;
+    display: flex;
+    margin-top: 5px;
+    justify-content: center;
+
     cursor: pointer;
     opacity: 0.9;
 
-    :hover {
-      padding: 13px 25px;
+    &:hover {
+      background-color: rgb(114, 114, 114);
+      color: rgb(233, 233, 233);
       opacity: 1;
     }
   }
@@ -82,20 +99,23 @@ nav {
 }
 
 .MainContainer {
+  height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 .Calculator {
-  width: 40%;
-
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 }
-
+#root {
+  height: 100%;
+}
 .container {
   display: flex;
   justify-content: center;

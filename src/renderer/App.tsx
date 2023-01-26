@@ -218,90 +218,95 @@ const Hello = () => {
   };
 
   return (
-    <div className="MainContainer">
-      <nav>
-        <Link to={'/'}>Select</Link>
-        <Link to={'/Input'}>Input</Link>
-        <Link to={'/Data'}>Data</Link>
-      </nav>
-      <div className="Calculator">
-        <div className="container">
-          <h1>Select The Data</h1>
-          <select
-            name="Dripper"
-            id="Dripper"
-            value={SDripper}
-            onChange={(event) => {
-              setSDripper(Number(event.target.value));
-            }}
-          >
-            {DripperSelect}
-          </select>
-          {SDripperDisplay}
-          <select
-            name="Pipe"
-            id="Pipe"
-            value={SelectedModel}
-            onChange={(event) => {
-              console.log(event.target.value);
-              setSelectedModel(event.target.value);
-            }}
-          >
-            {PipesSelect}
-          </select>
-          <input
-            type="number"
-            placeholder="End Pressure(dp)"
-            onChange={(event) => {
-              setDP(Number(event.target.value));
-            }}
-          ></input>
-          <input
-            type="number"
-            placeholder="Length"
-            onChange={(event) => {
-              setLength(Number(event.target.value));
-            }}
-          ></input>
-          <input
-            type="number"
-            placeholder="The coefficency of the dripper in the end of the line"
-            onChange={(event) => {
-              setkf(Number(event.target.value));
-            }}
-          ></input>
-          <div className="Range">
-            <input
-              name="Slope"
-              id="Slope"
-              placeholder="slope"
-              step={0.5}
-              max={10}
-              min={-10}
-              type="range"
-              onChange={handleRangeChange}
-            ></input>
-            <label>{Slope}%</label>
-          </div>
-          <div className="Range">
-            <input
-              name="SP"
-              id="SP"
-              placeholder="Space Between the Drippers"
-              step={0.05}
-              max={1}
-              min={0.15}
-              defaultValue={SP}
-              type="range"
-              onChange={handleRangeSpaceChange}
-            ></input>
-            <label>{SP}m</label>
-          </div>
-          <button onClick={Calculate}>Submit</button>
-        </div>
-        <div>{a}</div>
+    <>
+      <div className="MainTitle">
+        <h1>Calculator</h1>
       </div>
-    </div>
+      <div className="MainContainer">
+        <nav>
+          <Link to={'/'}>Select</Link>
+          <Link to={'/Input'}>Input</Link>
+          <Link to={'/Data'}>Data</Link>
+        </nav>
+        <div className="Calculator">
+          <div className="container">
+            <h1>Select The Data</h1>
+            <select
+              name="Dripper"
+              id="Dripper"
+              value={SDripper}
+              onChange={(event) => {
+                setSDripper(Number(event.target.value));
+              }}
+            >
+              {DripperSelect}
+            </select>
+            {SDripperDisplay}
+            <select
+              name="Pipe"
+              id="Pipe"
+              value={SelectedModel}
+              onChange={(event) => {
+                console.log(event.target.value);
+                setSelectedModel(event.target.value);
+              }}
+            >
+              {PipesSelect}
+            </select>
+            <input
+              type="number"
+              placeholder="End Pressure(dp)"
+              onChange={(event) => {
+                setDP(Number(event.target.value));
+              }}
+            ></input>
+            <input
+              type="number"
+              placeholder="Length"
+              onChange={(event) => {
+                setLength(Number(event.target.value));
+              }}
+            ></input>
+            <input
+              type="number"
+              placeholder="The coefficency of the dripper in the end of the line"
+              onChange={(event) => {
+                setkf(Number(event.target.value));
+              }}
+            ></input>
+            <div className="Range">
+              <input
+                name="Slope"
+                id="Slope"
+                placeholder="slope"
+                step={0.5}
+                max={10}
+                min={-10}
+                type="range"
+                onChange={handleRangeChange}
+              ></input>
+              <label>{Slope}%</label>
+            </div>
+            <div className="Range">
+              <input
+                name="SP"
+                id="SP"
+                placeholder="Space Between the Drippers"
+                step={0.05}
+                max={1}
+                min={0.15}
+                defaultValue={SP}
+                type="range"
+                onChange={handleRangeSpaceChange}
+              ></input>
+              <label>{SP}m</label>
+            </div>
+            <button onClick={Calculate}>Submit</button>
+          </div>
+          <div>{a}</div>
+        </div>
+      </div>
+    </>
   );
 };
 
