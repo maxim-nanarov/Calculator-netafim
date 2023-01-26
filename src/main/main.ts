@@ -148,11 +148,11 @@ const App = express();
 // let Path = path.join('linux-unpacked', 'resources', 'test.db');
 //
 //this is the localy directory of the database:
-// let Path = path.join('assets', 'DB', 'test.db');
+let Path = path.join('assets', 'DB', 'test.db');
 //assets/DB/test.db
 //In order to package for windows:  --win --x64
 //need to insert it to the json file in the package command
-const db = new sqlite3.Database('win-unpacked\resources\test', (err: any) => {
+const db = new sqlite3.Database(Path, (err: any) => {
   if (err) {
     console.error(err.message);
   } else {

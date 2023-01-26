@@ -13,11 +13,45 @@
   display: flex;
   // justify-content: right;
   right: 5%;
-  background-color: #4a4a87;
+  background-color: rgb(49 53 110);
   color: white;
 }
 
-nav {
+.MainData {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  background-color: rgb(133, 132, 132);
+  left: 0;
+  Link,
+  a {
+    width: 100%;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    background-color: rgb(133, 132, 132);
+    border: none;
+    appearance: none;
+    font-size: 1.3rem;
+    transition: all ease-in 0.3s;
+    cursor: pointer;
+    opacity: 0.9;
+    margin: 0;
+    display: flex;
+    margin-top: 5px;
+    justify-content: center;
+
+    cursor: pointer;
+    opacity: 0.9;
+
+    &:hover {
+      background-color: rgb(114, 114, 114);
+      color: rgb(233, 233, 233);
+      opacity: 1;
+    }
+  }
+}
+
+.MainNav {
   width: 20%;
   display: flex;
   justify-content: center;
@@ -52,7 +86,30 @@ nav {
     }
   }
 }
+nav {
+  display: flex;
+  justify-content: center;
+  Link,
+  a {
+    width: 100%;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    background-color: rgb(133, 132, 132);
+    border: none;
+    appearance: none;
+    font-size: 1.3rem;
+    transition: all ease-in 0.3s;
+    cursor: pointer;
+    opacity: 0.9;
+    margin: 0;
+    display: flex;
+    margin-top: 5px;
+    justify-content: center;
 
+    cursor: pointer;
+    opacity: 0.9;
+  }
+}
 .Form {
   display: flex;
   flex-direction: column;
@@ -96,6 +153,9 @@ nav {
   font-weight: 600;
   margin-top: 10px;
   margin-bottom: 100px;
+}
+
+.DataContainer {
 }
 
 .MainContainer {

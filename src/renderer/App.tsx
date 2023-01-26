@@ -223,7 +223,7 @@ const Hello = () => {
         <h1>Calculator</h1>
       </div>
       <div className="MainContainer">
-        <nav>
+        <nav className="MainNav">
           <Link to={'/'}>Select</Link>
           <Link to={'/Input'}>Input</Link>
           <Link to={'/Data'}>Data</Link>

@@ -45,8 +45,8 @@ export default function Data() {
       <div className="MainTitle">
         <h1>Calculator</h1>
       </div>
-      <div>
-        <nav>
+      <div className="DataContainer">
+        <nav className="MainData">
           <Link to={'/'}>Select</Link>
           <Link to={'/Input'}>Input</Link>
           <Link to={'/Data'}>Data</Link>
