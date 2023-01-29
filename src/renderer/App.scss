@@ -10,19 +10,18 @@
 }
 
 .MainTitle {
+  position: absolute;
   display: flex;
-  // justify-content: right;
   right: 5%;
-  background-color: rgb(49 53 110);
+  background-color: rgb(49, 53, 110);
   color: white;
-}
-
-.MainData {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  background-color: rgb(133, 132, 132);
+  z-index: 1;
   left: 0;
+  right: 0;
+}
+.MainData {
+  position: relative;
+  top: 46px;
   Link,
   a {
     width: 100%;
@@ -56,15 +55,15 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  background-color: rgb(133, 132, 132);
+  background-color: rgb(73, 73, 73);
   left: 0;
-  height: 100vh;
+  min-height: 100vw;
   Link,
   a {
     width: 100%;
     text-decoration: none;
-    color: rgb(0, 0, 0);
-    background-color: rgb(133, 132, 132);
+    color: rgb(240, 240, 240);
+    background-color: rgb(73, 73, 73);
     border: none;
     appearance: none;
     font-size: 1.3rem;
@@ -162,7 +161,6 @@ nav {
   height: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
 }
 .Calculator {

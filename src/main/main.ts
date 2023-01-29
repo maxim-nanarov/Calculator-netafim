@@ -142,13 +142,13 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 const App = express();
 //suppose to be the window directory to the data base:
-let Path = path.join(__dirname, '../../../test.db');
+// let Path = path.join(__dirname, '../../../test.db');
 //
 //suppose to be the Linux directory to the data base:
 // let Path = path.join('linux-unpacked', 'resources', 'test.db');
 //
 //this is the localy directory of the database:
-// let Path = path.join('assets', 'DB', 'test.db');
+let Path = path.join('assets', 'DB', 'test.db');
 //assets/DB/test.db
 //In order to package for windows:  --win --x64
 //need to insert it to the json file in the package command
