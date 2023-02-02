@@ -102,15 +102,7 @@ export default function Input() {
 
   return (
     <>
-      <div className="MainTitle">
-        <h1>Calculator</h1>
-      </div>
       <div className="MainContainer">
-        <nav className="MainNav">
-          <Link to={'/'}>Select</Link>
-          <Link to={'/Input'}>Input</Link>
-          <Link to={'/Data'}>Data</Link>
-        </nav>
         <div className="Calculator">
           <h1>Put The Data</h1>
           <form className="Form" onSubmit={Calculate}>

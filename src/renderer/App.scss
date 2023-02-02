@@ -10,18 +10,11 @@
 }
 
 .MainTitle {
-  position: absolute;
   display: flex;
-  right: 5%;
   background-color: rgb(49, 53, 110);
   color: white;
-  z-index: 1;
-  left: 0;
-  right: 0;
 }
 .MainData {
-  position: relative;
-  top: 46px;
   Link,
   a {
     width: 100%;
@@ -36,7 +29,6 @@
     opacity: 0.9;
     margin: 0;
     display: flex;
-    margin-top: 5px;
     justify-content: center;
 
     cursor: pointer;
@@ -155,6 +147,7 @@ nav {
 }
 
 .DataContainer {
+  width: 100%;
 }
 
 .MainContainer {
@@ -274,4 +267,16 @@ body {
   display: flex;
   flex-direction: row;
   margin-bottom: 10%;
+}
+
+.TheRestOfTheSite {
+  display: flex;
+  flex-direction: row;
+}
+.Outlet {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
