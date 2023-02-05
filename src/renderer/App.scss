@@ -147,10 +147,12 @@ nav {
 }
 
 .DataContainer {
+  height: 100%;
   width: 100%;
 }
 
 .MainContainer {
+  margin-top: 15%;
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -216,6 +218,7 @@ th {
 }
 
 .Table-Container {
+  margin-left: 5%;
   margin-bottom: 100px;
   margin-top: 7%;
   display: flex;
