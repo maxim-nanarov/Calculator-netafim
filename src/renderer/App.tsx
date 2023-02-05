@@ -236,11 +236,13 @@ const Home = () => {
           <h1>Calculator</h1>
         </div>
         <div className="TheRestOfTheSite">
-          <nav className="MainNav">
-            <Link to={'/'}>Select</Link>
-            <Link to={'/Input'}>Input</Link>
-            <Link to={'/MainData'}>Data</Link>
-          </nav>
+          <div className="MainNav-Container">
+            <nav className="MainNav">
+              <Link to={'/'}>Select</Link>
+              <Link to={'/Input'}>Input</Link>
+              <Link to={'/MainData'}>Data</Link>
+            </nav>
+          </div>
           <div className="Outlet">
             <Outlet />
           </div>

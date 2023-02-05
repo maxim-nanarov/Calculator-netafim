@@ -42,14 +42,20 @@
   }
 }
 
-.MainNav {
+.MainNav-Container {
+  min-height: 100vw;
   width: 20%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  background-color: rgb(73, 73, 73);
+}
+.MainNav {
+  height: 400px;
+  margin-top: 0px;
+  display: flex;
   flex-direction: column;
   background-color: rgb(73, 73, 73);
   left: 0;
-  min-height: 100vw;
   Link,
   a {
     width: 100%;
