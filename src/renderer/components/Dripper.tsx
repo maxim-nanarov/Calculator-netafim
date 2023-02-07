@@ -137,16 +137,18 @@ export default function Dripper_Table() {
               name="Name"
               id="Name"
             ></input>
-            <Button
-              onClick={() => {
-                setIsAdding(!isAdding);
-              }}
-            >
-              Cancle
-            </Button>
-            <Button form="AddForm" type="submit" value="Submit">
-              Insert
-            </Button>
+            <div className="Is-Adding">
+              <Button
+                onClick={() => {
+                  setIsAdding(!isAdding);
+                }}
+              >
+                Cancle
+              </Button>
+              <Button form="AddForm" type="submit" value="Submit">
+                Insert
+              </Button>
+            </div>
           </form>
         </div>
       );

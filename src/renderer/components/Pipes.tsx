@@ -94,9 +94,18 @@ function Pipes_Table() {
             <input placeholder="Model" name="Model" id="Model"></input>
             <input placeholder="Diameter" name="Diameter" id="Diameter"></input>
             <input placeholder="Pressure" name="Pressure" id="Pressure"></input>
-            <Button form="AddForm" type="submit" value="Submit">
-              INSERT
-            </Button>
+            <div className="Is-Adding">
+              <Button form="AddForm" type="submit" value="Submit">
+                INSERT
+              </Button>
+              <Button
+                onClick={() => {
+                  setIsAdding(!isAdding);
+                }}
+              >
+                Cancle
+              </Button>
+            </div>
           </form>
         </div>
       );

@@ -28,6 +28,7 @@ export default function Hello() {
   const [ResultsDp, setResultsDp] = useState<number>();
   const [a, setA] = useState<any>();
   const [kd, setKD] = useState<any>();
+  const [amountOfDrippers, setAmountOfDrippers] = useState<number>(0);
 
   //In here the functions help with the display
   //* of the slope of the line
@@ -128,8 +129,9 @@ export default function Hello() {
     if (ResultsQ !== undefined) {
       setA(
         <div className="Results">
+          <label> Amount Of Drippers: {Math.floor(amountOfDrippers)}</label>
           <label>Q: {ResultsQ} L/H</label>
-          <label>Dp: {ResultsDp} Flow Rate</label>
+          <label>P: {ResultsDp} (Bar)</label>
         </div>
       );
     }
@@ -181,6 +183,7 @@ export default function Hello() {
 
     let Qd: number = 0;
     let leng = Length / sp;
+    setAmountOfDrippers(leng);
     for (let i = 0; i <= leng; i++) {
       if (Dp < Pc) {
         Qd = k * Math.pow(Dp, x); //Is there a need for QD beeing inside the loop?
@@ -256,6 +259,7 @@ export default function Hello() {
               onChange={(event) => {
                 setLength(Number(event.target.value));
               }}
+              max="10000"
             ></input>
             <input
               type="number"
