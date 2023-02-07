@@ -56,4 +56,4 @@ function Ps(Slope, Length) {
 //of pressure and flow that the client can give, and in return
 //we give him the length of the pipe.
 //GivenDp, GivenQ, k, kd, kf, x, Dlat, Dp, pc, sp, Slope
-FindLength(6, 1, 0.7, 1.3, 0, 0, 14.2, 5, 5, 0.15, 5);
+FindLength(15, 15, 0.7, 1.3, 0, 0, 14.2, 5, 5, 1, 0);

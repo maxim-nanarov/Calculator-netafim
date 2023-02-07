@@ -335,8 +335,8 @@ App.post('/Delete_From_Dripper_Pipes', (req: any, res: any) => {
 });
 //Crud Functions to the Dripper Data Table
 App.post('/Update_Drippers_Data', (req: any, res: any) => {
-  console.log(req.body);
-  const data = req.body.data.Edit;
+  console.log(req.body.helper);
+  const data = req.body.helper;
 
   let sql = `UPDATE Drippers_Data SET Dripper_Id=${data.Dripper_id}, flow_rate=${data.flow_rate}, k=${data.k}, Pressure=${data.Pressure}, Exponent=${data.Exponent} WHERE Data_id = ${data.Data_id}`;
   db.all(sql, (err: any, rows: any) => {
@@ -352,6 +352,7 @@ App.post('/Update_Drippers_Data', (req: any, res: any) => {
 App.post('/Insert_Into_Dripper_Data', (req: any, res: any) => {
   console.log(req.body.data.formData);
   const data = req.body.data.formData;
+  const k = req.body.data.k;
   console.log('Dripper ID: ' + data.Dripper_Id);
   let id = 0;
   db.all(

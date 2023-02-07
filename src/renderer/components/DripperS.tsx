@@ -115,7 +115,7 @@ export default function DripperS() {
                   Delete();
                 }}
               >
-                DELETE
+                Delete
               </Button>
             </th>
           </tr>
@@ -147,11 +147,7 @@ export default function DripperS() {
               id="Flow_Rate"
               name="Flow_Rate"
             ></input>
-            <input
-              placeholder="Coefficency"
-              id="Coefficency"
-              name="Coefficency"
-            ></input>
+
             <input placeholder="Pressure" id="Pressure" name="Pressure"></input>
             <input placeholder="Exponent" id="Exponent" name="Exponent"></input>
             <div>
@@ -160,7 +156,7 @@ export default function DripperS() {
                   setIsAdding(!isAdding);
                 }}
               >
-                Cancle
+                Cancel
               </Button>
 
               <Button form="AddForm" type="submit" value="Submit">
@@ -251,11 +247,19 @@ export default function DripperS() {
 
   function Submit() {
     //Edit function
+    let helper = Edit;
+    if (Edit.Pressure > 0) {
+      helper.k = Edit.flow_rate / Math.pow(Edit.Pressure, Edit.Exponent);
+    } else {
+      helper.k = Edit.flow_rate / Math.pow(10, Edit.Exponent);
+    }
+
     axios
       .post('http://localhost:3000/Update_Drippers_Data', {
-        data: { Edit },
+        helper,
       })
       .then((res) => {
+        console.log(res);
         setEdit(-1);
         let num: number = Updater;
         num = num + 1;
@@ -287,19 +291,32 @@ export default function DripperS() {
     e.preventDefault();
     let formData: any = new FormData(e.target);
     formData = Object.fromEntries(formData);
-    axios
-      .post('http://localhost:3000/Insert_Into_Dripper_Data', {
-        data: { formData },
-      })
-      .then((res) => {
-        let num = Updater;
-        num = num + 1;
-        setUpdater(num);
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+    let k = 0;
+    //finding the k:
+    console.log(formData);
+    if (formData.Pressure > 0) {
+      k = formData.Flow_Rate / Math.pow(formData.Pressure, formData.Exponent);
+    } else {
+      k = formData.Flow_Rate / Math.pow(10, formData.Exponent);
+    }
+    console.log(k);
+    //checking to see if the k is working.
+    if (formData) {
+      axios
+        .post('http://localhost:3000/Insert_Into_Dripper_Data', {
+          data: { formData, k },
+        })
+        .then((res) => {
+          let num = Updater;
+          num = num + 1;
+          setUpdater(num);
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   return (
