@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import './App.css';
-import './App.scss';
+import '../App.css';
+import '../App.scss';
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Specific_data from './components/Specific_data';
+import Specific_data from '../components/Specific_data';
 
-export default function Hello() {
+export default function FindingLengthV1() {
   //Spipe is going to be the data of the selected pipe
   //the SelectedModel will be this pipe's index for the
   //selection
@@ -21,7 +21,7 @@ export default function Hello() {
   const [PipesSelect, setPipesSelect] = useState<JSX.Element[]>();
   const [SPipe, setSPipe] = useState<any>();
   const [SelectedModel, setSelectedModel] = useState<any>();
-  const [Length, setLength] = useState<number>(0);
+  const [PressureIn, setPressureIn] = useState<number>(0);
   const [Slope, setSlope] = useState(0);
   const [SP, setSP] = useState(0.15);
   const [dp, setDP] = useState(0);
@@ -130,7 +130,7 @@ export default function Hello() {
       setA(
         <div className="Results">
           <label> Amount Of Drippers: {Math.floor(amountOfDrippers)}</label>
-          <label>Q: {ResultsQ} L/H</label>
+          <label>Length: {ResultsQ} Meters</label>
           <label>P: {ResultsDp} (Bar)</label>
         </div>
       );
@@ -166,7 +166,7 @@ export default function Hello() {
     }
 
     console.log('Kd: ' + kd);
-    let sp = SP;
+    let sp: number = SP;
     let k = DripperData.k; //V
     let x = DripperData.Exponent; //V
     let Pc = DripperData.Pressure; //V
@@ -174,26 +174,38 @@ export default function Hello() {
     Dlat = SPipe.Diameter;
     let Q1 = 0;
     let Dp = dp;
+    sp = Number(sp);
 
-    if (Dp < Pc) {
-      Q1 = kf * Math.pow(Dp, 0.5);
+    if (dp < Pc) {
+      Q1 = kf * Math.pow(dp, 0.5);
     } else {
       Q1 = kf * Math.pow(Pc, 0.5);
     }
 
     let Qd: number = 0;
-    let leng = Length / sp;
-    setAmountOfDrippers(leng);
-    for (let i = 0; i <= leng; i++) {
+    let length: number = 0;
+    let counter = 0;
+    console.log(typeof sp);
+    console.log(PressureIn, Q1);
+    console.log(Dp, dp);
+    console.log(Q1 < PressureIn && Dp < dp);
+    while (Dp < PressureIn && counter < 1000) {
+      counter++;
       if (Dp < Pc) {
-        Qd = k * Math.pow(Dp, x); //Is there a need for QD beeing inside the loop?
+        Qd = k * Math.pow(Dp, x);
       } else {
         Qd = k * Math.pow(Pc, x);
       }
+      console.log('QD: ' + Qd);
       Q1 += Qd;
-      Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, kd) + Ps(Slope / 100, sp); // Am I doing the pressure right?
+      console.log('Q1: ' + Q1);
+      Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, k) + Ps(Slope, sp);
+      console.log('Dp: ' + Dp);
+      length = length + sp;
+      console.log('Length: ' + (length + sp));
     }
-    setResultsQ(Q1);
+    setResultsQ(length);
+    setAmountOfDrippers(counter);
     setResultsDp(Dp);
 
     function Phw(Qlat: number, Dlat: number, sp: number) {
@@ -223,7 +235,7 @@ export default function Hello() {
       <div className="MainContainer">
         <div className="Calculator">
           <div className="container">
-            <h1>Select The Data</h1>
+            <h1>Find Length V1</h1>
             <select
               name="Dripper"
               id="Dripper"
@@ -255,9 +267,9 @@ export default function Hello() {
             ></input>
             <input
               type="number"
-              placeholder="Length"
+              placeholder="Pressure at the start of the tube(Pin)"
               onChange={(event) => {
-                setLength(Number(event.target.value));
+                setPressureIn(Number(event.target.value));
               }}
               max="10000"
             ></input>

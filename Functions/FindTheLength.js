@@ -19,7 +19,7 @@ function FindLength(GivenDp, GivenQ, k, kd, kf, x, Dlat, Dp, pc, sp, Slope) {
   let Qd = 0;
   console.log('Given Q and Dp: ' + GivenQ, GivenDp);
   let counter = 0;
-  while (Q1 < GivenQ && Dp < GivenDp) {
+  while (Dp < GivenDp) {
     counter++;
     console.log(Dp);
     if (Dp < pc) {
@@ -28,7 +28,7 @@ function FindLength(GivenDp, GivenQ, k, kd, kf, x, Dlat, Dp, pc, sp, Slope) {
       Qd = k * Math.pow(pc, x);
     }
     Q1 += Qd;
-    Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, k) + Ps(Slope, sp); // Am I doing the pressure right?
+    Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, k) + Ps(Slope, sp); // Am I doing the pressure right? YES
     length += sp;
   }
   console.log('Q1: ' + Q1);
@@ -55,5 +55,5 @@ function Ps(Slope, Length) {
 //are Ultimetly the stoping condition for finding out what kind
 //of pressure and flow that the client can give, and in return
 //we give him the length of the pipe.
-//GivenDp, GivenQ, k, kd, kf, x, Dlat, Dp, pc, sp, Slope
-FindLength(15, 15, 0.7, 1.3, 0, 0, 14.2, 5, 5, 1, 0);
+//startingPressure, GivenQ, k, kd, kf, x, Dlat, Dp, pc, sp, Slope
+FindLength(15, 15, 0.7, 1.3, 0, 0, 14.2, 5, 5, 1, 10);
