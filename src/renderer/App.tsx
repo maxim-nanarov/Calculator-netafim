@@ -20,6 +20,7 @@ import Pipes from './components/Pipes';
 import path from 'path';
 import MainData from './MainData';
 import FindingLengthV1 from './CalculationsPages/LengthV1';
+import FindingLengthV2 from './CalculationsPages/LengthV2';
 
 const Home = () => {
   return (
@@ -32,7 +33,8 @@ const Home = () => {
           <div className="MainNav-Container">
             <nav className="MainNav">
               <Link to={'/'}>Select</Link>
-              <Link to={'/LengthV1'}>Find Length</Link>
+              <Link to={'/LengthV1'}>Find Length v1</Link>
+              <Link to={'/LengthV2'}>Find Length v2</Link>
               <Link to={'/Input'}>Input</Link>
               <Link to={'/MainData'}>Data</Link>
             </nav>
@@ -53,6 +55,7 @@ export default function App() {
         <Route path="/" element={<Home />}>
           <Route path="/" element={<Hello />} />
           <Route path="/LengthV1" element={<FindingLengthV1 />} />
+          <Route path="/LengthV2" element={<FindingLengthV2 />} />
           <Route path="/Input" element={<Input />} />
           <Route path="/MainData" element={<MainData />}>
             <Route path="/MainData" element={<Data />} />
