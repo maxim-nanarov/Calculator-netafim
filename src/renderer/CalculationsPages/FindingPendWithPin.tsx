@@ -205,11 +205,16 @@ export default function PendWithPin() {
         flag = false;
         setResultsQ(Pend);
       } else {
-        console.log(Pend + StartingPressure - Dp);
-        console.log(Pend, StartingPressure, Dp);
-        HelperPend = Pend + StartingPressure - Dp;
-
-        Dp = HelperPend;
+        if (isNaN(Dp)) {
+          Dp = 0;
+        }
+        if (Dp > StartingPressure) {
+          HelperPend = Dp - StartingPressure;
+          Pend = HelperPend;
+          Dp = HelperPend;
+        } else {
+          HelperPend = Dp - StartingPressure;
+        }
       }
     }
 
@@ -220,6 +225,12 @@ export default function PendWithPin() {
     }
     //the tube
     function Pd(Qlat: number, Dlat: number, kd: number) {
+      if (isNaN(Qlat)) {
+        Qlat = 0;
+      }
+      if (isNaN(Dlat)) {
+        Dlat = 0;
+      }
       let Q = Math.pow(Qlat, 2);
       let D = Math.pow(Dlat, -4);
       return 6.367 * Math.pow(10, -3) * Q * D * kd;
