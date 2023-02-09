@@ -56,4 +56,6 @@ function Ps(Slope, Length) {
 //of pressure and flow that the client can give, and in return
 //we give him the length of the pipe.
 //startingPressure, GivenQ, k, kd, kf, x, Dlat, Dp, pc, sp, Slope
-FindLength(15, 15, 0.7, 1.3, 0, 0, 14.2, 5, 5, 1, 10);
+// FindLength(15, 15, 0.7, 1.3, 0, 0, 14.2, 5, 5, 1, 10);
+
+console.log(parseFloat((13.000351385139).toFixed(3)) === 13);
