@@ -175,47 +175,52 @@ export default function PendWithPin() {
     let startingPressure = Q1;
     let Qd: number = 0;
     let length: number = 0;
-    let Pin = 0;
     let leng = Length / sp;
     setAmountOfDrippers(leng);
-    let Pend = startingPressure * 0.8;
     let HelperPend: number;
     let Dp = StartingPressure * 0.8; // the pressure of the Pend
     console.log(Dp);
     let flag = true; // a flag that will say that we found the right P-END
-    let count = 0;
-    while (flag && count < 1000) {
+    let count = 0; //if the code overflows this will anchor the programm.
+    let jump = Dp / 2; //A jump paremeter that will help us with a binaric search
+    while (flag && count < 100) {
       count++;
       console.log(count);
+      Qd = 0;
+      Q1 = 0;
+      HelperPend = Dp;
       for (let i = 0; i <= leng; i++) {
-        if (Dp < Pc) {
+        if (HelperPend < Pc) {
           Qd = k * Math.pow(Dp, x); //Is there a need for QD beeing inside the loop?
         } else {
           Qd = k * Math.pow(Pc, x);
         }
 
         Q1 += Qd;
-        Dp += Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, kd) + Ps(Slope / 100, sp); // Am I doing the pressure right?
-        console.log(Pd(Q1, Dlat, kd));
+        HelperPend +=
+          Phw(Q1, Dlat, sp) + Pd(Q1, Dlat, kd) + Ps(Slope / 100, sp); // Am I doing the pressure right?
       }
-      Pin = Dp;
+      //see's the
       //Given ending pressure + intendet entrance pressure - current result pressure
-      if (parseFloat(Pin.toFixed(3)) === StartingPressure) {
-        console.log(parseFloat(Pin.toFixed(3)), StartingPressure);
+      console.log(
+        parseFloat(HelperPend.toFixed(3)) === StartingPressure,
+        StartingPressure,
+        parseFloat(HelperPend.toFixed(3))
+      );
+      if (parseFloat(HelperPend.toFixed(3)) === StartingPressure) {
         flag = false;
-        setResultsQ(Pend);
-      } else {
-        if (isNaN(Dp)) {
-          Dp = 0;
-        }
-        if (Dp > StartingPressure) {
-          HelperPend = Dp - StartingPressure;
-          Pend = HelperPend;
-          Dp = HelperPend;
-        } else {
-          HelperPend = Dp - StartingPressure;
-        }
+        setResultsQ(Dp);
       }
+      if (HelperPend > StartingPressure) {
+        Dp = Dp - jump;
+        jump = jump / 2;
+      } else {
+        Dp = Dp + jump;
+        jump = jump / 2;
+      }
+      // if (jump < 0.01) {
+      //   jump = Dp / 2;
+      // }
     }
 
     function Phw(Qlat: number, Dlat: number, sp: number) {
